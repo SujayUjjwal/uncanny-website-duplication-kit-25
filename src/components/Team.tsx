@@ -7,21 +7,15 @@ const Team = () => {
 
   const team = [
     {
-      name: "Kiran Shah",
-      title: "Director",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      specialization: "Overall Management & Strategy"
-    },
-    {
       name: "Sumit Sir",
       title: "PHYSICS TEACHER",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      image: "/lovable-uploads/cd6caae8-576f-4eb6-9780-ebfc731840c3.png",
       specialization: "Advanced Physics & Problem Solving"
     },
     {
-      name: "Prakash Sir",
-      title: "BIOLOGY TEACHER",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      name: "Faculty Member",
+      title: "BIOLOGY TEACHER", 
+      image: "/lovable-uploads/be221229-7e52-40c8-b71a-b6cba2a50769.png",
       specialization: "Botany, Zoology & Medical Concepts"
     }
   ];
@@ -42,7 +36,7 @@ const Team = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8" ref={teamRef}>
+        <div className="grid md:grid-cols-2 gap-8 justify-center" ref={teamRef}>
           {team.map((member, index) => (
             <div 
               key={index} 
