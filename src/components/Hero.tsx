@@ -2,6 +2,16 @@
 import { Facebook, Twitter, Instagram } from "lucide-react";
 
 const Hero = () => {
+  const handleSocialClick = (platform: string) => {
+    console.log(`Opening ${platform}`);
+    const urls = {
+      facebook: 'https://facebook.com',
+      twitter: 'https://twitter.com',
+      instagram: 'https://instagram.com'
+    };
+    window.open(urls[platform as keyof typeof urls], '_blank');
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-cover bg-center animate-scale-in" style={{
@@ -40,17 +50,18 @@ const Hero = () => {
         
         <div className="flex justify-center space-x-4 mb-12">
           {[
-            { Icon: Facebook, bg: "bg-blue-600", delay: "6000" },
-            { Icon: Twitter, bg: "bg-blue-400", delay: "6200" },
-            { Icon: Instagram, bg: "bg-pink-600", delay: "6400" }
-          ].map(({ Icon, bg, delay }, index) => (
-            <div
+            { Icon: Facebook, bg: "bg-blue-600", delay: "6000", platform: "facebook" },
+            { Icon: Twitter, bg: "bg-blue-400", delay: "6200", platform: "twitter" },
+            { Icon: Instagram, bg: "bg-pink-600", delay: "6400", platform: "instagram" }
+          ].map(({ Icon, bg, delay, platform }, index) => (
+            <button
               key={index}
+              onClick={() => handleSocialClick(platform)}
               className={`w-10 h-10 ${bg} rounded-full flex items-center justify-center transition-all duration-300 hover:scale-125 hover:rotate-12 animate-bounce-in cursor-pointer`}
               style={{ animationDelay: `${delay}ms` }}
             >
               <Icon className="w-5 h-5 text-white animate-float" style={{ animationDelay: `${delay}ms` }} />
-            </div>
+            </button>
           ))}
         </div>
       </div>

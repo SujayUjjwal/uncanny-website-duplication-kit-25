@@ -4,17 +4,46 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useState } from "react";
 
 const Contact = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const contactInfo = [
-    { Icon: Phone, text: "+91-91597730898" },
-    { Icon: Mail, text: "sumitneetbooking@gmail.com" },
-    { Icon: MapPin, text: "www.sumitneetcoaching@gmail.com" },
-    { Icon: Mail, text: "www.joharinform@gmail.com" }
+    { Icon: Phone, text: "+91-91597730898", action: () => window.open('tel:+919159773089') },
+    { Icon: Mail, text: "sumitneetbooking@gmail.com", action: () => window.open('mailto:sumitneetbooking@gmail.com') },
+    { Icon: MapPin, text: "www.sumitneetcoaching@gmail.com", action: () => window.open('mailto:sumitneetcoaching@gmail.com') },
+    { Icon: Mail, text: "www.joharinform@gmail.com", action: () => window.open('mailto:joharinform@gmail.com') }
   ];
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    console.log('Form submitted:', formData);
+    
+    // Simulate form submission
+    setTimeout(() => {
+      alert('Thank you for your message! We will get back to you soon.');
+      setFormData({ name: '', email: '', message: '' });
+      setIsSubmitting(false);
+    }, 1000);
+  };
 
   return (
     <section id="contact" className="py-16 bg-white">
@@ -43,10 +72,11 @@ const Contact = () => {
             </p>
 
             <div className="space-y-4">
-              {contactInfo.map(({ Icon, text }, index) => (
-                <div 
+              {contactInfo.map(({ Icon, text, action }, index) => (
+                <button
                   key={index}
-                  className={`flex items-center space-x-3 group transition-all duration-500 hover:translate-x-2 ${
+                  onClick={action}
+                  className={`flex items-center space-x-3 group transition-all duration-500 hover:translate-x-2 w-full text-left ${
                     contentVisible ? 'animate-fade-in-up' : 'opacity-0'
                   }`}
                   style={{ animationDelay: `${(index * 100) + 200}ms` }}
@@ -55,15 +85,18 @@ const Contact = () => {
                     <Icon className="w-4 h-4 text-white transition-transform duration-300 group-hover:scale-125" />
                   </div>
                   <span className="text-gray-700 transition-colors duration-300 group-hover:text-gray-900">{text}</span>
-                </div>
+                </button>
               ))}
             </div>
 
             {/* Map placeholder */}
-            <div className={`mt-8 h-64 bg-gray-200 rounded-lg flex items-center justify-center transition-all duration-700 hover:bg-gray-300 ${
+            <div className={`mt-8 h-64 bg-gray-200 rounded-lg flex items-center justify-center transition-all duration-700 hover:bg-gray-300 cursor-pointer ${
               contentVisible ? 'animate-scale-in' : 'opacity-0 scale-75'
-            }`} style={{ animationDelay: '600ms' }}>
-              <span className="text-gray-500 transition-colors duration-300 hover:text-gray-700">Map Location</span>
+            }`} 
+            style={{ animationDelay: '600ms' }}
+            onClick={() => console.log('Opening map location')}
+            >
+              <span className="text-gray-500 transition-colors duration-300 hover:text-gray-700">Click to View Map Location</span>
             </div>
           </div>
 
@@ -71,36 +104,58 @@ const Contact = () => {
           <div className={`bg-black p-8 rounded-lg transition-all duration-700 ${
             contentVisible ? 'animate-slide-in-right' : 'opacity-0 translate-x-8'
           }`}>
-            <form className="space-y-6">
-              {[
-                { type: "text", placeholder: "Your Name*" },
-                { type: "email", placeholder: "Your Email*" }
-              ].map((field, index) => (
-                <div key={index} className={`transition-all duration-500 ${
-                  contentVisible ? 'animate-fade-in-up' : 'opacity-0'
-                }`} style={{ animationDelay: `${(index * 100) + 300}ms` }}>
-                  <Input 
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 transition-all duration-300 focus:scale-105 focus:bg-gray-700" 
-                  />
-                </div>
-              ))}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className={`transition-all duration-500 ${
+                contentVisible ? 'animate-fade-in-up' : 'opacity-0'
+              }`} style={{ animationDelay: '300ms' }}>
+                <Input 
+                  type="text"
+                  name="name"
+                  placeholder="Your Name*"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 transition-all duration-300 focus:scale-105 focus:bg-gray-700" 
+                />
+              </div>
+              
+              <div className={`transition-all duration-500 ${
+                contentVisible ? 'animate-fade-in-up' : 'opacity-0'
+              }`} style={{ animationDelay: '400ms' }}>
+                <Input 
+                  type="email"
+                  name="email"
+                  placeholder="Your Email*"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 transition-all duration-300 focus:scale-105 focus:bg-gray-700" 
+                />
+              </div>
               
               <div className={`transition-all duration-500 ${
                 contentVisible ? 'animate-fade-in-up' : 'opacity-0'
               }`} style={{ animationDelay: '500ms' }}>
                 <Textarea 
+                  name="message"
                   placeholder="Your Message*" 
-                  rows={5} 
+                  rows={5}
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
                   className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 transition-all duration-300 focus:scale-105 focus:bg-gray-700" 
                 />
               </div>
               
-              <Button className={`w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg ${
-                contentVisible ? 'animate-bounce-in' : 'opacity-0 scale-75'
-              }`} style={{ animationDelay: '700ms' }}>
-                Send
+              <Button 
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${
+                  contentVisible ? 'animate-bounce-in' : 'opacity-0 scale-75'
+                }`} 
+                style={{ animationDelay: '700ms' }}
+              >
+                {isSubmitting ? 'Sending...' : 'Send'}
               </Button>
             </form>
           </div>

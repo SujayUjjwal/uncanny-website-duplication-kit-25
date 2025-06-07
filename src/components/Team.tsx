@@ -8,16 +8,26 @@ const Team = () => {
   const team = [{
     name: "Kiran Shah",
     title: "Director",
-    image: "/lovable-uploads/ab2cb6d5-bf7e-467e-8cef-dfaf2945b20a.png"
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    specialization: "Overall Management & Strategy"
   }, {
     name: "Sumit Sir",
     title: "PHYSICS TEACHER",
-    image: "/lovable-uploads/ab2cb6d5-bf7e-467e-8cef-dfaf2945b20a.png"
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    specialization: "Advanced Physics & Problem Solving"
   }, {
     name: "Prakash Sir",
-    title: "BIOLOGY",
-    image: "/lovable-uploads/ab2cb6d5-bf7e-467e-8cef-dfaf2945b20a.png"
+    title: "BIOLOGY TEACHER",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    specialization: "Botany, Zoology & Medical Concepts"
   }];
+
+  const handleTeacherContact = (teacherName: string) => {
+    console.log(`Contacting ${teacherName}`);
+    // Scroll to contact section
+    const contactSection = document.getElementById('contact');
+    contactSection?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <section id="team" className="py-16 bg-gray-50">
@@ -46,17 +56,29 @@ const Team = () => {
             >
               <div className="relative w-48 h-64 bg-gray-300 rounded-lg mx-auto mb-4 overflow-hidden transition-all duration-300 group-hover:shadow-xl">
                 <img 
-                  src="/api/placeholder/200/250" 
+                  src={member.image} 
                   alt={member.name} 
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <button
+                      onClick={() => handleTeacherContact(member.name)}
+                      className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-4 rounded transition-all duration-300 hover:scale-105"
+                    >
+                      Contact
+                    </button>
+                  </div>
+                </div>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-1 transition-colors duration-300 group-hover:text-yellow-600">
                 {member.name}
               </h3>
-              <p className="text-gray-600 transition-colors duration-300 group-hover:text-gray-800">
+              <p className="text-gray-600 transition-colors duration-300 group-hover:text-gray-800 mb-2">
                 {member.title}
+              </p>
+              <p className="text-sm text-gray-500">
+                {member.specialization}
               </p>
             </div>
           ))}

@@ -6,29 +6,46 @@ import { Menu, X } from "lucide-react";
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handleNavClick = (href: string, sectionName: string) => {
+    console.log(`Navigating to ${sectionName}`);
+    setIsMenuOpen(false);
+    
+    if (href.startsWith('#')) {
+      const element = document.getElementById(href.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const navItems = [
+    { name: "HOME", href: "#", active: true, section: "Hero" },
+    { name: "SERVICES", href: "#services", active: false, section: "Services" },
+    { name: "STRATEGY", href: "#strategy", active: false, section: "Strategy" },
+    { name: "REVIEWS", href: "#reviews", active: false, section: "Reviews" },
+    { name: "OUR TEAM", href: "#team", active: false, section: "Team" },
+    { name: "CONTACT US", href: "#contact", active: false, section: "Contact" }
+  ];
+
   return (
     <nav className="bg-white shadow-sm fixed w-full z-50 animate-slide-in-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <span className="text-xl font-bold text-gray-800 animate-slide-in-left animation-delay-200">
+            <span 
+              className="text-xl font-bold text-gray-800 animate-slide-in-left animation-delay-200 cursor-pointer"
+              onClick={() => handleNavClick("#", "Home")}
+            >
               SUMIT NEET COACHING
             </span>
           </div>
           
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              {[
-                { name: "HOME", href: "#", active: true },
-                { name: "SERVICES", href: "#services" },
-                { name: "WORKS", href: "#" },
-                { name: "REVIEWS", href: "#" },
-                { name: "OUR TEAM", href: "#team" },
-                { name: "CONTACT US", href: "#contact" }
-              ].map((item, index) => (
-                <a
+              {navItems.map((item, index) => (
+                <button
                   key={item.name}
-                  href={item.href}
+                  onClick={() => handleNavClick(item.href, item.section)}
                   className={`relative transition-all duration-300 hover:scale-105 animate-fade-in ${
                     item.active ? "text-yellow-600 font-medium" : "text-gray-700 hover:text-yellow-600"
                   }`}
@@ -36,7 +53,7 @@ const Navigation = () => {
                 >
                   {item.name}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-600 transition-all duration-300 hover:w-full"></span>
-                </a>
+                </button>
               ))}
             </div>
           </div>
@@ -61,18 +78,11 @@ const Navigation = () => {
         isMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
       }`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
-          {[
-            { name: "HOME", href: "#", active: true },
-            { name: "SERVICES", href: "#services" },
-            { name: "WORKS", href: "#" },
-            { name: "REVIEWS", href: "#" },
-            { name: "OUR TEAM", href: "#team" },
-            { name: "CONTACT US", href: "#contact" }
-          ].map((item, index) => (
-            <a
+          {navItems.map((item, index) => (
+            <button
               key={item.name}
-              href={item.href}
-              className={`block px-3 py-2 transition-all duration-300 hover:bg-gray-100 hover:translate-x-2 ${
+              onClick={() => handleNavClick(item.href, item.section)}
+              className={`block w-full text-left px-3 py-2 transition-all duration-300 hover:bg-gray-100 hover:translate-x-2 ${
                 item.active ? "text-yellow-600 font-medium" : "text-gray-700"
               }`}
               style={{ 
@@ -81,7 +91,7 @@ const Navigation = () => {
               }}
             >
               {item.name}
-            </a>
+            </button>
           ))}
         </div>
       </div>

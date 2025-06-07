@@ -1,9 +1,29 @@
 
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useState } from "react";
 
 const Reviews = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation();
+  const [currentReview, setCurrentReview] = useState(0);
+
+  const reviews = [
+    {
+      text: "I attended demo classes of almost all coaching but their faculties were very qualified and has experience. I missed initial week and found exceptionally excellent faculties.",
+      author: "Best Client EVER",
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
+    },
+    {
+      text: "The teaching methodology is excellent and the study material provided is comprehensive. Highly recommended for NEET preparation.",
+      author: "Satisfied Student",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
+    },
+    {
+      text: "Amazing faculty and great support throughout the preparation. The mock tests really helped me improve my performance.",
+      author: "NEET Achiever",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
+    }
+  ];
 
   return (
     <section className="py-16 bg-black text-white">
@@ -22,28 +42,39 @@ const Reviews = () => {
         </div>
         
         <div className="mb-8" ref={contentRef}>
-          <div className={`w-16 h-16 bg-gray-600 rounded-full mx-auto mb-6 transition-all duration-600 hover:scale-110 hover:bg-gray-500 ${
+          <div className={`w-16 h-16 bg-gray-600 rounded-full mx-auto mb-6 transition-all duration-600 hover:scale-110 hover:bg-gray-500 overflow-hidden ${
             contentVisible ? 'animate-scale-in' : 'opacity-0'
           }`}>
+            <img 
+              src={reviews[currentReview].image} 
+              alt={reviews[currentReview].author}
+              className="w-full h-full object-cover"
+            />
           </div>
           <blockquote className={`text-lg italic mb-6 transition-all duration-700 ${
             contentVisible ? 'animate-fade-in-up' : 'opacity-0'
           }`} style={{ animationDelay: '300ms' }}>
-            "I attended demo classes of almost all coaching but their faculties were very qualified and has experience. I missed initial week and found exceptionally excellent faculties."
+            "{reviews[currentReview].text}"
           </blockquote>
           <p className={`text-gray-400 transition-all duration-700 ${
             contentVisible ? 'animate-fade-in-up' : 'opacity-0'
           }`} style={{ animationDelay: '500ms' }}>
-            - Best Client EVER
+            - {reviews[currentReview].author}
           </p>
         </div>
 
         <div className={`flex justify-center space-x-2 transition-all duration-700 ${
           contentVisible ? 'animate-fade-in-up' : 'opacity-0'
         }`} style={{ animationDelay: '700ms' }}>
-          <div className="w-2 h-2 bg-yellow-500 rounded-full transition-all duration-300 hover:scale-150"></div>
-          <div className="w-2 h-2 bg-gray-600 rounded-full transition-all duration-300 hover:scale-150 hover:bg-yellow-500 cursor-pointer"></div>
-          <div className="w-2 h-2 bg-gray-600 rounded-full transition-all duration-300 hover:scale-150 hover:bg-yellow-500 cursor-pointer"></div>
+          {reviews.map((_, index) => (
+            <div 
+              key={index}
+              className={`w-2 h-2 rounded-full transition-all duration-300 hover:scale-150 cursor-pointer ${
+                index === currentReview ? 'bg-yellow-500' : 'bg-gray-600 hover:bg-yellow-500'
+              }`}
+              onClick={() => setCurrentReview(index)}
+            />
+          ))}
         </div>
       </div>
     </section>
