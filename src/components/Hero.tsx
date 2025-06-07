@@ -1,5 +1,6 @@
 
 import { Facebook, Twitter, Instagram } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   const handleSocialClick = (platform: string) => {
@@ -10,6 +11,11 @@ const Hero = () => {
       instagram: 'https://instagram.com'
     };
     window.open(urls[platform as keyof typeof urls], '_blank');
+  };
+
+  const handleRegisterClick = () => {
+    console.log('Register for Seminar clicked');
+    // Add registration logic here
   };
 
   return (
@@ -55,7 +61,7 @@ const Hero = () => {
                style={{ animationDelay: '4500ms' }} />
         </div>
         
-        <div className="flex justify-center space-x-4 mb-12">
+        <div className="flex justify-center space-x-4 mb-8">
           {[{
             Icon: Facebook,
             bg: "bg-blue-600",
@@ -86,6 +92,15 @@ const Hero = () => {
               <Icon className="w-5 h-5 text-white" />
             </button>
           ))}
+        </div>
+
+        <div className="animate-gentle-fade-in-up" style={{ animationDelay: '6600ms' }}>
+          <Button 
+            onClick={handleRegisterClick}
+            className="bg-yellow-500 text-black font-semibold px-8 py-3 text-lg hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105"
+          >
+            Register for Seminar
+          </Button>
         </div>
       </div>
     </section>
