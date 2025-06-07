@@ -47,7 +47,7 @@ const Hero = () => {
              style={{ animationDelay: '4000ms' }}>
           <div className="h-0.5 w-8 bg-yellow-500 mr-4 animate-expand-width sm:w-12 md:w-16"
                style={{ animationDelay: '4500ms' }} />
-          <span className="text-yellow-500 font-medium text-sm tracking-wider animate-gentle-scale-in sm:text-base md:text-lg"
+          <span className="text-yellow-500 font-medium text-sm tracking-wider animate-fantastic-glow sm:text-base md:text-lg"
                 style={{ animationDelay: '5000ms' }}>
             A COACHING FOR EXCELLENCE
           </span>
