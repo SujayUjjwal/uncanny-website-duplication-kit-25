@@ -80,7 +80,7 @@ const Hero = () => {
             <button 
               key={index} 
               onClick={() => handleSocialClick(platform)} 
-              className={`w-10 h-10 ${bg} rounded-full flex items-center justify-center transition-all duration-300 animate-gentle-scale-in cursor-pointer`}
+              className={`w-10 h-10 ${bg} rounded-full flex items-center justify-center transition-all duration-300 animate-gentle-fade-in cursor-pointer`}
               style={{ animationDelay: `${delay}ms` }}
             >
               <Icon className="w-5 h-5 text-white" />
