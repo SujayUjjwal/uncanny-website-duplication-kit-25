@@ -3,9 +3,11 @@ import { Facebook, Twitter, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RegistrationForm from "./RegistrationForm";
 import EnrollmentForm from "./EnrollmentForm";
+
 const Hero = () => {
   const [registrationOpen, setRegistrationOpen] = useState(false);
   const [enrollmentOpen, setEnrollmentOpen] = useState(false);
+
   const handleSocialClick = (platform: string) => {
     console.log(`Opening ${platform}`);
     const urls = {
@@ -15,14 +17,17 @@ const Hero = () => {
     };
     window.open(urls[platform as keyof typeof urls], '_blank');
   };
+
   const handleRegisterClick = () => {
     console.log('Register for Seminar clicked');
     setRegistrationOpen(true);
   };
+
   const handleEnrollClick = () => {
     console.log('Enroll button clicked');
     setEnrollmentOpen(true);
   };
+
   return <>
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center animate-gentle-fade-in" style={{
@@ -52,7 +57,7 @@ const Hero = () => {
             </h1>
             <h1 className="text-6xl font-bold mb-6 tracking-wide animate-gentle-fade-in-up xl:text-7xl" style={{
             animationDelay: '3000ms'
-          }}>WELCOME TO SUMIT NEET </h1>
+          }}>COACHING</h1>
           </div>
           
           <div className="flex items-center justify-center mb-8 animate-gentle-fade-in-up" style={{
@@ -123,4 +128,5 @@ const Hero = () => {
       <EnrollmentForm open={enrollmentOpen} onOpenChange={setEnrollmentOpen} />
     </>;
 };
+
 export default Hero;
