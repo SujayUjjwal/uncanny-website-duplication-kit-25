@@ -4,8 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Menu, X, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Star } from "lucide-react";
+
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const services = [{
     name: "Complete Level of Learning",
     color: "bg-red-500",
@@ -122,7 +124,7 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-cover bg-center" style={{
-        backgroundImage: "url('/lovable-uploads/8a3625cc-aee4-4302-a346-652c2f9d7432.png')"
+        backgroundImage: "url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')"
       }} />
         <div className="absolute inset-0 bg-black bg-opacity-40" />
         
@@ -384,4 +386,5 @@ const Index = () => {
       </footer>
     </div>;
 };
+
 export default Index;
