@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -129,16 +128,6 @@ export default {
 						transform: 'translateX(0)'
 					}
 				},
-				'gentle-scale-in': {
-					'0%': {
-						opacity: '0',
-						transform: 'scale(0.95)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'scale(1)'
-					}
-				},
 				'gentle-progress': {
 					'0%': {
 						width: '0%'
@@ -198,7 +187,6 @@ export default {
 				'gentle-fade-in-up': 'gentle-fade-in-up 1s ease-out',
 				'gentle-slide-in-left': 'gentle-slide-in-left 1s ease-out',
 				'gentle-slide-in-right': 'gentle-slide-in-right 1s ease-out',
-				'gentle-scale-in': 'gentle-scale-in 0.8s ease-out',
 				'gentle-progress': 'gentle-progress 1.2s ease-out',
 				'typewriter': 'typewriter 3s steps(40) 1s both',
 				'expand-width': 'expand-width 1s ease-out',
