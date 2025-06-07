@@ -1,6 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { Book, TestTube, Stethoscope } from "lucide-react";
 
 const Services = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
@@ -40,15 +41,18 @@ const Services = () => {
   const cardData = [
     {
       title: "Physics",
-      description: "Physics is extremely important and its topics as asked in NEET."
+      description: "Physics is extremely important and its topics as asked in NEET.",
+      icon: Book
     },
     {
       title: "Chemistry", 
-      description: "Chemistry is important because every thing in this body from face and blood, is made of chemicals."
+      description: "Chemistry is important because every thing in this body from face and blood, is made of chemicals.",
+      icon: TestTube
     },
     {
       title: "Biology",
-      description: "Biology as it important since giving access other that can in biology of science medicine which most important."
+      description: "Biology as it important since giving access other that can in biology of science medicine which most important.",
+      icon: Stethoscope
     }
   ];
 
@@ -104,7 +108,7 @@ const Services = () => {
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
                     <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center transition-transform duration-300 hover:rotate-12">
-                      <div className="w-6 h-6 bg-gray-600 rounded transition-colors duration-300 hover:bg-yellow-500" />
+                      <card.icon className="w-6 h-6 text-gray-600 transition-colors duration-300 hover:text-yellow-500" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2 transition-colors duration-300 hover:text-yellow-600">

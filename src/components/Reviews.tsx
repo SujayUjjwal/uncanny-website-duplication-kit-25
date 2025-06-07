@@ -1,6 +1,6 @@
 
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Reviews = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
@@ -24,6 +24,15 @@ const Reviews = () => {
       image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
     }
   ];
+
+  // Auto-advance reviews every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentReview((prev) => (prev + 1) % reviews.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [reviews.length]);
 
   return (
     <section className="py-16 bg-black text-white">
