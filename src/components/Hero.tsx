@@ -14,7 +14,7 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-cover bg-center animate-gentle-scale-in" 
+      <div className="absolute inset-0 bg-cover bg-center animate-gentle-fade-in" 
            style={{
              backgroundImage: "url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')"
            }} />
@@ -47,7 +47,7 @@ const Hero = () => {
              style={{ animationDelay: '4000ms' }}>
           <div className="h-0.5 w-8 bg-yellow-500 mr-4 animate-expand-width sm:w-12 md:w-16"
                style={{ animationDelay: '4500ms' }} />
-          <span className="text-yellow-500 font-medium text-sm tracking-wider animate-fantastic-glow sm:text-base md:text-lg"
+          <span className="text-yellow-500 font-medium text-sm tracking-wider animate-gentle-fade-in-up sm:text-base md:text-lg"
                 style={{ animationDelay: '5000ms' }}>
             A COACHING FOR EXCELLENCE
           </span>
