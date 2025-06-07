@@ -9,20 +9,33 @@ const Hero = () => {
       }} />
       <div className="absolute inset-0 bg-black bg-opacity-40 animate-fade-in animation-delay-500" />
       
-      <div className="relative z-10 text-center text-white px-4">
-        <h1 className="text-4xl font-bold mb-6 tracking-wide md:text-8xl animate-typewriter overflow-hidden whitespace-nowrap border-r-4 border-yellow-500">
-          WELCOME TO SUMIT NEET
-        </h1>
-        <h1 className="text-4xl font-bold mb-6 tracking-wide md:text-8xl animate-fade-in-up animation-delay-3000">
-          COACHING
-        </h1>
+      <div className="relative z-10 text-center text-white px-4 max-w-7xl mx-auto">
+        {/* Mobile and Tablet View */}
+        <div className="block lg:hidden">
+          <h1 className="text-2xl font-bold mb-3 tracking-wide animate-fade-in-up sm:text-3xl md:text-4xl">
+            WELCOME TO
+          </h1>
+          <h1 className="text-2xl font-bold mb-6 tracking-wide animate-fade-in-up animation-delay-500 sm:text-3xl md:text-4xl">
+            SUMIT NEET COACHING
+          </h1>
+        </div>
+        
+        {/* Desktop View */}
+        <div className="hidden lg:block">
+          <h1 className="text-6xl font-bold mb-6 tracking-wide xl:text-8xl animate-typewriter overflow-hidden whitespace-nowrap border-r-4 border-yellow-500 mx-auto max-w-fit">
+            WELCOME TO SUMIT NEET
+          </h1>
+          <h1 className="text-6xl font-bold mb-6 tracking-wide xl:text-8xl animate-fade-in-up animation-delay-3000">
+            COACHING
+          </h1>
+        </div>
         
         <div className="flex items-center justify-center mb-8 animate-fade-in-up animation-delay-4000">
-          <div className="h-0.5 w-0 bg-yellow-500 mr-4 animate-expand-width animation-delay-4500" />
-          <span className="text-yellow-500 font-medium text-lg tracking-wider animate-scale-in animation-delay-5000">
+          <div className="h-0.5 w-8 bg-yellow-500 mr-4 animate-expand-width animation-delay-4500 sm:w-12 md:w-16" />
+          <span className="text-yellow-500 font-medium text-sm tracking-wider animate-scale-in animation-delay-5000 sm:text-base md:text-lg">
             A COACHING FOR EXCELLENCE
           </span>
-          <div className="h-0.5 w-0 bg-yellow-500 ml-4 animate-expand-width animation-delay-4500" />
+          <div className="h-0.5 w-8 bg-yellow-500 ml-4 animate-expand-width animation-delay-4500 sm:w-12 md:w-16" />
         </div>
         
         <div className="flex justify-center space-x-4 mb-12">
