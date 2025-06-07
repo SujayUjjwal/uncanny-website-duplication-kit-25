@@ -1,7 +1,12 @@
 
 import { Card, CardContent } from "@/components/ui/card";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Services = () => {
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
+  const { ref: servicesRef, isVisible: servicesVisible } = useScrollAnimation();
+  const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation();
+
   const services = [{
     name: "Complete Level of Learning",
     color: "bg-red-500",
@@ -32,77 +37,87 @@ const Services = () => {
     width: "w-full"
   }];
 
+  const cardData = [
+    {
+      title: "Physics",
+      description: "Physics is extremely important and its topics as asked in NEET."
+    },
+    {
+      title: "Chemistry", 
+      description: "Chemistry is important because every thing in this body from face and blood, is made of chemicals."
+    },
+    {
+      title: "Biology",
+      description: "Biology as it important since giving access other that can in biology of science medicine which most important."
+    }
+  ];
+
   return (
     <section id="services" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">What Do We Offer</h2>
+        <div className="text-center mb-12" ref={titleRef}>
+          <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-700 ${
+            titleVisible ? 'animate-scale-in' : 'opacity-0'
+          }`}>
+            What Do We Offer
+          </h2>
         </div>
         
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Services List */}
-          <div className="space-y-6">
+          <div className="space-y-6" ref={servicesRef}>
             {services.map((service, index) => (
-              <div key={index} className="space-y-2">
+              <div 
+                key={index} 
+                className={`space-y-2 transition-all duration-600 ${
+                  servicesVisible ? 'animate-slide-in-left' : 'opacity-0 translate-x-8'
+                }`}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-700">{service.name}</span>
+                  <span className="text-sm font-medium text-gray-700 transition-colors duration-300 hover:text-gray-900">
+                    {service.name}
+                  </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className={`${service.color} h-2 rounded-full ${service.width}`} />
+                <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                  <div 
+                    className={`${service.color} h-2 rounded-full transition-all duration-1000 ease-out transform ${
+                      servicesVisible ? service.width : 'w-0'
+                    }`}
+                    style={{ transitionDelay: `${(index * 100) + 200}ms` }}
+                  />
                 </div>
               </div>
             ))}
           </div>
 
           {/* Features */}
-          <div className="space-y-8">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <div className="w-6 h-6 bg-gray-600 rounded" />
+          <div className="space-y-8" ref={cardsRef}>
+            {cardData.map((card, index) => (
+              <Card 
+                key={index}
+                className={`transition-all duration-600 hover:scale-105 hover:shadow-lg ${
+                  cardsVisible ? 'animate-slide-in-right' : 'opacity-0 translate-x-8'
+                }`}
+                style={{ animationDelay: `${index * 200}ms` }}
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center transition-transform duration-300 hover:rotate-12">
+                      <div className="w-6 h-6 bg-gray-600 rounded transition-colors duration-300 hover:bg-yellow-500" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-2 transition-colors duration-300 hover:text-yellow-600">
+                        {card.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm transition-colors duration-300 hover:text-gray-800">
+                        {card.description}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Physics</h3>
-                    <p className="text-gray-600 text-sm">
-                      Physics is extremely important and its topics as asked in NEET.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <div className="w-6 h-6 bg-gray-600 rounded" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Chemistry</h3>
-                    <p className="text-gray-600 text-sm">
-                      Chemistry is important because every thing in this body from face and blood, is made of chemicals.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <div className="w-6 h-6 bg-gray-600 rounded" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Biology</h3>
-                    <p className="text-gray-600 text-sm">
-                      Biology as it important since giving access other that can in biology of science medicine which most important.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
