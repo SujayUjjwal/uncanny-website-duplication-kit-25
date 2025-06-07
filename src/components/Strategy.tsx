@@ -1,32 +1,11 @@
 
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useContent } from "@/contexts/ContentContext";
 
 const Strategy = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: stepsRef, isVisible: stepsVisible } = useScrollAnimation();
-
-  const strategySteps = [
-    {
-      number: "1",
-      title: "Concept",
-      description: "Creating conceptual clarity to solidify concepts and ensure strong foundation."
-    },
-    {
-      number: "2",
-      title: "Prepare",
-      description: "Prepare Adequately for Exams with Smart Study Techniques."
-    },
-    {
-      number: "3",
-      title: "Revision",
-      description: "Revise to get Good in Entrance with Smart Revision and Test Methods."
-    },
-    {
-      number: "4",
-      title: "Selection",
-      description: "Continuous Active Plan That Sets Achieving Your Future by Making Steps."
-    }
-  ];
+  const { content } = useContent();
 
   return (
     <section className="py-16 bg-white">
@@ -35,19 +14,19 @@ const Strategy = () => {
           <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-700 ${
             titleVisible ? 'animate-gentle-scale-in' : 'opacity-0'
           }`}>
-            Our Strategy
+            {content.strategy.title}
           </h2>
           <p className={`text-gray-600 transition-all duration-700 ${
             titleVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
           }`} style={{ animationDelay: '200ms' }}>
-            Our Strategic Comprehensive NEET
+            {content.strategy.subtitle}
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" ref={stepsRef}>
-          {strategySteps.map((step, index) => (
+          {content.strategy.steps.map((step, index) => (
             <div 
-              key={index} 
+              key={step.id} 
               className={`text-center group transition-all duration-700 ${
                 stepsVisible ? 'animate-gentle-fade-in-up' : 'opacity-0 translate-y-8'
               }`}

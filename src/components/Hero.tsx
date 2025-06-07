@@ -1,21 +1,24 @@
+
 import { useState } from "react";
 import { Facebook, Twitter, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useContent } from "@/contexts/ContentContext";
 import RegistrationForm from "./RegistrationForm";
 import EnrollmentForm from "./EnrollmentForm";
 
 const Hero = () => {
   const [registrationOpen, setRegistrationOpen] = useState(false);
   const [enrollmentOpen, setEnrollmentOpen] = useState(false);
+  const { content } = useContent();
 
   const handleSocialClick = (platform: string) => {
     console.log(`Opening ${platform}`);
-    const urls = {
-      facebook: 'https://facebook.com',
-      twitter: 'https://twitter.com', 
-      instagram: 'https://instagram.com'
+    const urls: { [key: string]: string } = {
+      facebook: content.hero.socialLinks.facebook,
+      twitter: content.hero.socialLinks.twitter,
+      instagram: content.hero.socialLinks.instagram
     };
-    window.open(urls[platform as keyof typeof urls], '_blank');
+    window.open(urls[platform], '_blank');
   };
 
   const handleRegisterClick = () => {
@@ -33,7 +36,7 @@ const Hero = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center animate-gentle-fade-in" 
              style={{
-               backgroundImage: "url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')"
+               backgroundImage: `url('${content.hero.backgroundImage}')`
              }} />
         <div className="absolute inset-0 bg-black bg-opacity-40 animate-gentle-fade-in" style={{ animationDelay: '500ms' }} />
         
@@ -41,22 +44,22 @@ const Hero = () => {
           {/* Mobile and Tablet View */}
           <div className="block lg:hidden">
             <h1 className="text-2xl font-bold mb-3 tracking-wide animate-gentle-fade-in-up sm:text-3xl md:text-4xl">
-              WELCOME TO
+              {content.hero.title}
             </h1>
             <h1 className="text-2xl font-bold mb-6 tracking-wide animate-gentle-fade-in-up sm:text-3xl md:text-4xl"
                 style={{ animationDelay: '500ms' }}>
-              SUMIT NEET COACHING
+              {content.hero.subtitle}
             </h1>
           </div>
           
           {/* Desktop View */}
           <div className="hidden lg:block">
             <h1 className="text-6xl font-bold mb-6 tracking-wide animate-typewriter overflow-hidden whitespace-nowrap border-r-4 border-yellow-500 mx-auto max-w-fit xl:text-7xl">
-              WELCOME TO SUMIT NEET
+              {content.hero.title}
             </h1>
             <h1 className="text-6xl font-bold mb-6 tracking-wide animate-gentle-fade-in-up xl:text-7xl"
                 style={{ animationDelay: '3000ms' }}>
-              COACHING
+              {content.hero.subtitle}
             </h1>
           </div>
           
@@ -66,7 +69,7 @@ const Hero = () => {
                  style={{ animationDelay: '4500ms' }} />
             <span className="text-yellow-500 font-medium text-sm tracking-wider animate-gentle-fade-in-up sm:text-base md:text-lg"
                   style={{ animationDelay: '5000ms' }}>
-              A COACHING FOR EXCELLENCE
+              {content.hero.tagline}
             </span>
             <div className="h-0.5 w-8 bg-yellow-500 ml-4 animate-expand-width sm:w-12 md:w-16"
                  style={{ animationDelay: '4500ms' }} />
@@ -110,7 +113,7 @@ const Hero = () => {
               onClick={handleRegisterClick}
               className="bg-yellow-500 text-black font-semibold px-8 py-3 text-lg hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105"
             >
-              Register for Seminar
+              {content.hero.buttonText}
             </Button>
           </div>
         </div>

@@ -1,40 +1,23 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useContent } from "@/contexts/ContentContext";
 import { Book, TestTube, Stethoscope } from "lucide-react";
 
 const Services = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: servicesRef, isVisible: servicesVisible } = useScrollAnimation();
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation();
+  const { content } = useContent();
 
-  const services = [
-    { name: "Complete Level of Learning", color: "bg-red-500", width: "w-full" },
-    { name: "Science Test and Product Guidance", color: "bg-blue-500", width: "w-5/6" },
-    { name: "Computational Modeling Aptitude", color: "bg-green-500", width: "w-4/5" },
-    { name: "One-on-one Personalized Learning", color: "bg-yellow-500", width: "w-3/4" },
-    { name: "Strength Improvement Focused Sessions in NEET", color: "bg-orange-500", width: "w-5/6" },
-    { name: "Subject Test and Evaluation", color: "bg-purple-500", width: "w-4/5" },
-    { name: "Best Education from Expert AIMS", color: "bg-teal-500", width: "w-full" }
-  ];
-
-  const cardData = [
-    {
-      title: "Physics",
-      description: "Physics is extremely important and its topics as asked in NEET.",
-      icon: Book
-    },
-    {
-      title: "Chemistry", 
-      description: "Chemistry is important because every thing in this body from face and blood, is made of chemicals.",
-      icon: TestTube
-    },
-    {
-      title: "Biology",
-      description: "Biology as it important since giving access other that can in biology of science medicine which most important.",
-      icon: Stethoscope
-    }
-  ];
+  const getIconComponent = (iconName: string) => {
+    const icons: { [key: string]: any } = {
+      Book,
+      TestTube,
+      Stethoscope
+    };
+    return icons[iconName] || Book;
+  };
 
   return (
     <section id="services" className="py-16 bg-gray-50">
@@ -43,16 +26,16 @@ const Services = () => {
           <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-700 ${
             titleVisible ? 'animate-gentle-scale-in' : 'opacity-0'
           }`}>
-            What Do We Offer
+            {content.services.title}
           </h2>
         </div>
         
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Services List */}
           <div className="space-y-6" ref={servicesRef}>
-            {services.map((service, index) => (
+            {content.services.services.map((service, index) => (
               <div 
-                key={index} 
+                key={service.id} 
                 className={`space-y-2 transition-all duration-600 ${
                   servicesVisible ? 'animate-gentle-slide-in-left' : 'opacity-0 translate-x-8'
                 }`}
@@ -80,31 +63,34 @@ const Services = () => {
 
           {/* Features */}
           <div className="space-y-8" ref={cardsRef}>
-            {cardData.map((card, index) => (
-              <Card 
-                key={index}
-                className={`transition-all duration-600 ${
-                  cardsVisible ? 'animate-gentle-slide-in-right' : 'opacity-0 translate-x-8'
-                }`}
-                style={{ animationDelay: `${index * 200}ms` }}
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center transition-transform duration-300">
-                      <card.icon className="w-6 h-6 text-gray-600 transition-colors duration-300" />
+            {content.services.subjects.map((card, index) => {
+              const IconComponent = getIconComponent(card.icon);
+              return (
+                <Card 
+                  key={card.id}
+                  className={`transition-all duration-600 ${
+                    cardsVisible ? 'animate-gentle-slide-in-right' : 'opacity-0 translate-x-8'
+                  }`}
+                  style={{ animationDelay: `${index * 200}ms` }}
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center transition-transform duration-300">
+                        <IconComponent className="w-6 h-6 text-gray-600 transition-colors duration-300" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 mb-2 transition-colors duration-300">
+                          {card.title}
+                        </h3>
+                        <p className="text-gray-600 text-sm transition-colors duration-300">
+                          {card.description}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 mb-2 transition-colors duration-300">
-                        {card.title}
-                      </h3>
-                      <p className="text-gray-600 text-sm transition-colors duration-300">
-                        {card.description}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </div>

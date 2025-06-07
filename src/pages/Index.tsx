@@ -8,9 +8,11 @@ import Reviews from "@/components/Reviews";
 import Team from "@/components/Team";
 import Contact from "@/components/Contact";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useContent } from "@/contexts/ContentContext";
 
 const Index = () => {
   const { ref: footerRef, isVisible: footerVisible } = useScrollAnimation();
+  const { content } = useContent();
 
   return (
     <div className="min-h-screen bg-white">
@@ -37,7 +39,7 @@ const Index = () => {
           <p className={`text-gray-400 transition-all duration-700 ${
             footerVisible ? 'animate-fade-in-up' : 'opacity-0'
           }`}>
-            © 2024 Sumit NEET Coaching. All rights reserved.
+            {content.footer.text}
           </p>
         </div>
       </footer>

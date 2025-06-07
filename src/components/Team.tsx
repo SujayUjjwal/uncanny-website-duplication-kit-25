@@ -1,24 +1,11 @@
 
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useContent } from "@/contexts/ContentContext";
 
 const Team = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: teamRef, isVisible: teamVisible } = useScrollAnimation();
-
-  const team = [
-    {
-      name: "Sumit Sir",
-      title: "PHYSICS TEACHER",
-      image: "/lovable-uploads/cd6caae8-576f-4eb6-9780-ebfc731840c3.png",
-      specialization: "Advanced Physics & Problem Solving"
-    },
-    {
-      name: "Faculty Member",
-      title: "BIOLOGY TEACHER", 
-      image: "/lovable-uploads/be221229-7e52-40c8-b71a-b6cba2a50769.png",
-      specialization: "Botany, Zoology & Medical Concepts"
-    }
-  ];
+  const { content } = useContent();
 
   return (
     <section id="team" className="py-16 bg-gray-50">
@@ -27,19 +14,19 @@ const Team = () => {
           <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-800 ${
             titleVisible ? 'animate-soothing-fade-in' : 'opacity-0'
           }`}>
-            Meet The Teacher's
+            {content.team.title}
           </h2>
           <p className={`text-gray-600 transition-all duration-800 ${
             titleVisible ? 'animate-soothing-fade-in-up' : 'opacity-0'
           }`} style={{ animationDelay: '200ms' }}>
-            Our provides our coaching systematic structure
+            {content.team.subtitle}
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 justify-center" ref={teamRef}>
-          {team.map((member, index) => (
+          {content.team.members.map((member, index) => (
             <div 
-              key={index} 
+              key={member.id} 
               className={`text-center group transition-all duration-800 ${
                 teamVisible ? 'animate-soothing-fade-in-up' : 'opacity-0 translate-y-8'
               }`}

@@ -2,21 +2,20 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useEffect, useState } from "react";
 import { GraduationCap } from "lucide-react";
+import { useContent } from "@/contexts/ContentContext";
 
 const Statistics = () => {
   const { ref, isVisible } = useScrollAnimation();
-  const [counts, setCounts] = useState([0, 0, 0, 0]);
+  const { content } = useContent();
+  const [counts, setCounts] = useState<number[]>([]);
 
-  const stats = [
-    { number: "9", label: "YEARS AND COUNTING" },
-    { number: "10", label: "YEARS AND COUNTING" },
-    { number: "11", label: "PHYSICS, CHEMISTRY AND BIOLOGY" },
-    { number: "12", label: "PHYSICS, CHEMISTRY AND BIOLOGY" }
-  ];
+  useEffect(() => {
+    setCounts(new Array(content.statistics.stats.length).fill(0));
+  }, [content.statistics.stats.length]);
 
   useEffect(() => {
     if (isVisible) {
-      stats.forEach((stat, index) => {
+      content.statistics.stats.forEach((stat, index) => {
         const targetNumber = parseInt(stat.number);
         let currentNumber = 0;
         const increment = targetNumber / 50;
@@ -35,15 +34,15 @@ const Statistics = () => {
         }, 50);
       });
     }
-  }, [isVisible]);
+  }, [isVisible, content.statistics.stats]);
 
   return (
     <section className="py-16 bg-gray-800 text-white" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-          {stats.map((stat, index) => (
+          {content.statistics.stats.map((stat, index) => (
             <div 
-              key={index}
+              key={stat.id}
               className={`group transition-all duration-600 ${
                 isVisible ? 'animate-gentle-fade-in-up' : 'opacity-0 scale-75'
               }`}
@@ -52,7 +51,7 @@ const Statistics = () => {
               <div className="relative w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300 overflow-hidden">
                 <GraduationCap className="absolute top-1 w-4 h-4 text-gray-600 z-10" />
                 <span className="text-2xl font-bold text-gray-800 transition-transform duration-300">
-                  {isVisible ? counts[index] : 0}
+                  {isVisible ? counts[index] || 0 : 0}
                 </span>
               </div>
               <p className={`text-sm text-gray-300 transition-all duration-500 ${
