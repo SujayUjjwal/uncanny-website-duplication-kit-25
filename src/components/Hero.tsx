@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Facebook, Twitter, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,22 +32,22 @@ const Hero = () => {
   return <>
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center animate-gentle-fade-in" style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')"
+        backgroundImage: "url('/lovable-uploads/d09b805e-1b5a-406a-8fc2-5f19c01e481e.png')"
       }} />
         <div className="absolute inset-0 bg-black bg-opacity-40 animate-gentle-fade-in" style={{
         animationDelay: '500ms'
       }} />
         
         <div className="relative z-10 text-center text-white px-4 max-w-7xl mx-auto">
-          {/* Mobile and Tablet View */}
+          {/* Mobile and Tablet View - Now with typewriter animation */}
           <div className="block lg:hidden">
-            <h1 className="text-2xl font-bold mb-3 tracking-wide animate-gentle-fade-in-up sm:text-3xl md:text-4xl">
-              WELCOME TO
+            <h1 className="text-2xl font-bold mb-3 tracking-wide animate-typewriter overflow-hidden whitespace-nowrap border-r-4 border-yellow-500 mx-auto max-w-fit sm:text-3xl md:text-4xl">
+              WELCOME TO SUMIT NEET
             </h1>
             <h1 className="text-2xl font-bold mb-6 tracking-wide animate-gentle-fade-in-up sm:text-3xl md:text-4xl" style={{
-            animationDelay: '500ms'
+            animationDelay: '3000ms'
           }}>
-              SUMIT NEET COACHING
+              COACHING
             </h1>
           </div>
           
