@@ -40,8 +40,8 @@ const Services = () => {
     <section id="services" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12" ref={titleRef}>
-          <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-700 animate-breathing ${
-            titleVisible ? 'animate-scale-in' : 'opacity-0'
+          <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-700 ${
+            titleVisible ? 'animate-gentle-scale-in' : 'opacity-0'
           }`}>
             What Do We Offer
           </h2>
@@ -53,13 +53,10 @@ const Services = () => {
             {services.map((service, index) => (
               <div 
                 key={index} 
-                className={`space-y-2 transition-all duration-600 animate-gentle-sway ${
-                  servicesVisible ? 'animate-slide-in-left' : 'opacity-0 translate-x-8'
+                className={`space-y-2 transition-all duration-600 ${
+                  servicesVisible ? 'animate-gentle-slide-in-left' : 'opacity-0 translate-x-8'
                 }`}
-                style={{ 
-                  animationDelay: `${index * 100}ms`,
-                  animationDuration: `${6 + index * 0.2}s`
-                }}
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium text-gray-700 transition-colors duration-300">
@@ -68,7 +65,7 @@ const Services = () => {
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden relative">
                   <div 
-                    className={`${service.color} h-2 rounded-full transition-all duration-1000 ease-out transform animate-progress-fill ${
+                    className={`${service.color} h-2 rounded-full transition-all duration-1000 ease-out transform ${
                       servicesVisible ? service.width : 'w-0'
                     }`}
                     style={{ 
@@ -76,7 +73,6 @@ const Services = () => {
                       '--target-width': service.width.replace('w-', '').replace('full', '100%').replace('5/6', '83.33%').replace('4/5', '80%').replace('3/4', '75%')
                     } as React.CSSProperties}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-shimmer"></div>
                 </div>
               </div>
             ))}
@@ -87,21 +83,17 @@ const Services = () => {
             {cardData.map((card, index) => (
               <Card 
                 key={index}
-                className={`transition-all duration-600 animate-breathing ${
-                  cardsVisible ? 'animate-slide-in-right' : 'opacity-0 translate-x-8'
+                className={`transition-all duration-600 ${
+                  cardsVisible ? 'animate-gentle-slide-in-right' : 'opacity-0 translate-x-8'
                 }`}
-                style={{ 
-                  animationDelay: `${index * 200}ms`,
-                  animationDuration: `${3 + index * 0.5}s`
-                }}
+                style={{ animationDelay: `${index * 200}ms` }}
               >
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center transition-transform duration-300 animate-rotate-slow">
-                      <card.icon className="w-6 h-6 text-gray-600 transition-colors duration-300 animate-color-cycle" 
-                                  style={{ animationDuration: `${6 + index * 2}s` }} />
+                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center transition-transform duration-300">
+                      <card.icon className="w-6 h-6 text-gray-600 transition-colors duration-300" />
                     </div>
-                    <div className="animate-gentle-float" style={{ animationDuration: `${4 + index}s` }}>
+                    <div>
                       <h3 className="font-semibold text-gray-900 mb-2 transition-colors duration-300">
                         {card.title}
                       </h3>

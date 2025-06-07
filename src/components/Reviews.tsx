@@ -46,14 +46,14 @@ const Reviews = () => {
     <section className="py-16 bg-black text-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div ref={titleRef}>
-          <h2 className={`text-3xl font-bold mb-4 transition-all duration-700 animate-breathing ${
-            titleVisible ? 'animate-scale-in' : 'opacity-0'
+          <h2 className={`text-3xl font-bold mb-4 transition-all duration-700 ${
+            titleVisible ? 'animate-gentle-scale-in' : 'opacity-0'
           }`}>
             Our Reviews
           </h2>
-          <p className={`text-gray-400 mb-12 transition-all duration-700 animate-gentle-float ${
-            titleVisible ? 'animate-fade-in-up' : 'opacity-0'
-          }`} style={{ animationDelay: '200ms', animationDuration: '5s' }}>
+          <p className={`text-gray-400 mb-12 transition-all duration-700 ${
+            titleVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
+          }`} style={{ animationDelay: '200ms' }}>
             Our Institute past students previous reviews
           </p>
         </div>
@@ -61,56 +61,54 @@ const Reviews = () => {
         <div className="mb-8 relative px-12 sm:px-16" ref={contentRef}>
           <button
             onClick={goToPrevious}
-            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full flex items-center justify-center transition-all duration-300 animate-orbital ${
-              contentVisible ? 'animate-fade-in' : 'opacity-0'
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full flex items-center justify-center transition-all duration-300 ${
+              contentVisible ? 'animate-gentle-fade-in' : 'opacity-0'
             }`}
-            style={{ animationDelay: '600ms', animationDuration: '8s' }}
+            style={{ animationDelay: '600ms' }}
           >
-            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-bob" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </button>
           
           <button
             onClick={goToNext}
-            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full flex items-center justify-center transition-all duration-300 animate-orbital ${
-              contentVisible ? 'animate-fade-in' : 'opacity-0'
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full flex items-center justify-center transition-all duration-300 ${
+              contentVisible ? 'animate-gentle-fade-in' : 'opacity-0'
             }`}
-            style={{ animationDelay: '600ms', animationDuration: '10s' }}
+            style={{ animationDelay: '600ms' }}
           >
-            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-bob" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </button>
 
-          <div className={`w-16 h-16 bg-gray-600 rounded-full mx-auto mb-6 transition-all duration-600 overflow-hidden animate-breathing ${
-            contentVisible ? 'animate-scale-in' : 'opacity-0'
-          }`} style={{ animationDuration: '3s' }}>
+          <div className={`w-16 h-16 bg-gray-600 rounded-full mx-auto mb-6 transition-all duration-600 overflow-hidden ${
+            contentVisible ? 'animate-gentle-scale-in' : 'opacity-0'
+          }`}>
             <img 
               src={reviews[currentReview].image} 
               alt={reviews[currentReview].author}
-              className="w-full h-full object-cover animate-ken-burns"
-              style={{ animationDuration: '8s' }}
+              className="w-full h-full object-cover"
             />
           </div>
-          <blockquote className={`text-lg italic mb-6 transition-all duration-700 animate-gentle-float ${
-            contentVisible ? 'animate-fade-in-up' : 'opacity-0'
-          }`} style={{ animationDelay: '300ms', animationDuration: '4s' }}>
+          <blockquote className={`text-lg italic mb-6 transition-all duration-700 ${
+            contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
+          }`} style={{ animationDelay: '300ms' }}>
             "{reviews[currentReview].text}"
           </blockquote>
-          <p className={`text-gray-400 transition-all duration-700 animate-breathing ${
-            contentVisible ? 'animate-fade-in-up' : 'opacity-0'
-          }`} style={{ animationDelay: '500ms', animationDuration: '2.5s' }}>
+          <p className={`text-gray-400 transition-all duration-700 ${
+            contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
+          }`} style={{ animationDelay: '500ms' }}>
             - {reviews[currentReview].author}
           </p>
         </div>
 
         <div className={`flex justify-center space-x-2 transition-all duration-700 ${
-          contentVisible ? 'animate-fade-in-up' : 'opacity-0'
+          contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
         }`} style={{ animationDelay: '700ms' }}>
           {reviews.map((_, index) => (
             <div 
               key={index}
-              className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer animate-breathing ${
+              className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
                 index === currentReview ? 'bg-yellow-500' : 'bg-gray-600'
               }`}
-              style={{ animationDuration: `${2 + index * 0.2}s` }}
               onClick={() => setCurrentReview(index)}
             />
           ))}

@@ -48,25 +48,25 @@ const Contact = () => {
     <section id="contact" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12" ref={titleRef}>
-          <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-700 animate-breathing ${
-            titleVisible ? 'animate-scale-in' : 'opacity-0'
+          <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-700 ${
+            titleVisible ? 'animate-gentle-scale-in' : 'opacity-0'
           }`}>
             Get in Touch
           </h2>
-          <p className={`text-gray-600 transition-all duration-700 animate-gentle-float ${
-            titleVisible ? 'animate-fade-in-up' : 'opacity-0'
-          }`} style={{ animationDelay: '200ms', animationDuration: '5s' }}>
+          <p className={`text-gray-600 transition-all duration-700 ${
+            titleVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
+          }`} style={{ animationDelay: '200ms' }}>
             Best Place to learning for coaching be the future to.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12" ref={contentRef}>
           {/* Contact Info */}
-          <div className={`transition-all duration-700 animate-gentle-sway ${
-            contentVisible ? 'animate-slide-in-left' : 'opacity-0 -translate-x-8'
-          }`} style={{ animationDuration: '6s' }}>
-            <h3 className="text-xl font-semibold text-gray-900 mb-6 animate-breathing">Feel Free To Contact</h3>
-            <p className="text-gray-600 mb-8 animate-gentle-float" style={{ animationDuration: '4s' }}>
+          <div className={`transition-all duration-700 ${
+            contentVisible ? 'animate-gentle-slide-in-left' : 'opacity-0 -translate-x-8'
+          }`}>
+            <h3 className="text-xl font-semibold text-gray-900 mb-6">Feel Free To Contact</h3>
+            <p className="text-gray-600 mb-8">
               You may easily get in touch with us if you have any questions. Please feel free.
             </p>
 
@@ -75,46 +75,40 @@ const Contact = () => {
                 <button
                   key={index}
                   onClick={action}
-                  className={`flex items-center space-x-3 group transition-all duration-500 w-full text-left animate-bob ${
-                    contentVisible ? 'animate-fade-in-up' : 'opacity-0'
+                  className={`flex items-center space-x-3 group transition-all duration-500 w-full text-left ${
+                    contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
                   }`}
-                  style={{ 
-                    animationDelay: `${(index * 100) + 200}ms`,
-                    animationDuration: `${2 + index * 0.2}s`
-                  }}
+                  style={{ animationDelay: `${(index * 100) + 200}ms` }}
                 >
-                  <div className="w-8 h-8 bg-black rounded flex items-center justify-center transition-all duration-300 animate-orbital"
-                       style={{ animationDuration: `${8 + index * 2}s` }}>
-                    <Icon className="w-4 h-4 text-white transition-transform duration-300 animate-rotate-slow"
-                          style={{ animationDuration: `${10 + index * 3}s` }} />
+                  <div className="w-8 h-8 bg-black rounded flex items-center justify-center transition-all duration-300">
+                    <Icon className="w-4 h-4 text-white transition-transform duration-300" />
                   </div>
-                  <span className="text-gray-700 transition-colors duration-300 animate-gentle-float"
-                        style={{ animationDuration: `${4 + index * 0.3}s` }}>{text}</span>
+                  <span className="text-gray-700 transition-colors duration-300">{text}</span>
                 </button>
               ))}
             </div>
 
             {/* Map placeholder */}
-            <div className={`mt-8 h-64 bg-gray-200 rounded-lg flex items-center justify-center transition-all duration-700 cursor-pointer animate-breathing ${
-              contentVisible ? 'animate-scale-in' : 'opacity-0 scale-75'
+            <div className={`mt-8 h-64 bg-gray-200 rounded-lg flex items-center justify-center transition-all duration-700 cursor-pointer ${
+              contentVisible ? 'animate-gentle-scale-in' : 'opacity-0 scale-75'
             }`} 
-            style={{ animationDelay: '600ms', animationDuration: '3s' }}
+            style={{ animationDelay: '600ms' }}
             onClick={() => console.log('Opening map location')}
             >
-              <span className="text-gray-500 transition-colors duration-300 animate-gentle-float" style={{ animationDuration: '5s' }}>
+              <span className="text-gray-500 transition-colors duration-300">
                 Click to View Map Location
               </span>
             </div>
           </div>
 
           {/* Contact Form */}
-          <div className={`bg-black p-8 rounded-lg transition-all duration-700 animate-gentle-sway ${
-            contentVisible ? 'animate-slide-in-right' : 'opacity-0 translate-x-8'
-          }`} style={{ animationDuration: '6.5s' }}>
+          <div className={`bg-black p-8 rounded-lg transition-all duration-700 ${
+            contentVisible ? 'animate-gentle-slide-in-right' : 'opacity-0 translate-x-8'
+          }`}>
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className={`transition-all duration-500 animate-breathing ${
-                contentVisible ? 'animate-fade-in-up' : 'opacity-0'
-              }`} style={{ animationDelay: '300ms', animationDuration: '2.5s' }}>
+              <div className={`transition-all duration-500 ${
+                contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
+              }`} style={{ animationDelay: '300ms' }}>
                 <Input 
                   type="text"
                   name="name"
@@ -126,9 +120,9 @@ const Contact = () => {
                 />
               </div>
               
-              <div className={`transition-all duration-500 animate-breathing ${
-                contentVisible ? 'animate-fade-in-up' : 'opacity-0'
-              }`} style={{ animationDelay: '400ms', animationDuration: '3s' }}>
+              <div className={`transition-all duration-500 ${
+                contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
+              }`} style={{ animationDelay: '400ms' }}>
                 <Input 
                   type="email"
                   name="email"
@@ -140,9 +134,9 @@ const Contact = () => {
                 />
               </div>
               
-              <div className={`transition-all duration-500 animate-breathing ${
-                contentVisible ? 'animate-fade-in-up' : 'opacity-0'
-              }`} style={{ animationDelay: '500ms', animationDuration: '3.5s' }}>
+              <div className={`transition-all duration-500 ${
+                contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
+              }`} style={{ animationDelay: '500ms' }}>
                 <Textarea 
                   name="message"
                   placeholder="Your Message*" 
@@ -157,10 +151,10 @@ const Contact = () => {
               <Button 
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full bg-yellow-500 text-black font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed animate-breathing ${
-                  contentVisible ? 'animate-bounce-in' : 'opacity-0 scale-75'
+                className={`w-full bg-yellow-500 text-black font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
+                  contentVisible ? 'animate-gentle-scale-in' : 'opacity-0 scale-75'
                 }`} 
-                style={{ animationDelay: '700ms', animationDuration: '2s' }}
+                style={{ animationDelay: '700ms' }}
               >
                 {isSubmitting ? 'Sending...' : 'Send'}
               </Button>

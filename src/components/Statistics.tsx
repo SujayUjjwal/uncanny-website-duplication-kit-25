@@ -44,34 +44,21 @@ const Statistics = () => {
           {stats.map((stat, index) => (
             <div 
               key={index}
-              className={`group transition-all duration-600 animate-gentle-float ${
-                isVisible ? 'animate-bounce-in' : 'opacity-0 scale-75'
+              className={`group transition-all duration-600 ${
+                isVisible ? 'animate-gentle-fade-in-up' : 'opacity-0 scale-75'
               }`}
-              style={{ 
-                animationDelay: `${index * 200}ms`,
-                animationDuration: `${4 + index * 0.3}s`
-              }}
+              style={{ animationDelay: `${index * 200}ms` }}
             >
-              <div className="relative w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300 overflow-hidden animate-breathing"
-                   style={{ animationDuration: `${3 + index * 0.2}s` }}>
-                <GraduationCap className="absolute top-1 w-4 h-4 text-gray-600 z-10 animate-bob" 
-                               style={{ animationDuration: `${2 + index * 0.1}s` }} />
-                <span className="text-2xl font-bold text-gray-800 transition-transform duration-300 animate-gentle-sway"
-                      style={{ animationDuration: `${6 + index * 0.5}s` }}>
+              <div className="relative w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300 overflow-hidden">
+                <GraduationCap className="absolute top-1 w-4 h-4 text-gray-600 z-10" />
+                <span className="text-2xl font-bold text-gray-800 transition-transform duration-300">
                   {isVisible ? counts[index] : 0}
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 opacity-20 animate-orbital"
-                     style={{ animationDuration: `${8 + index * 2}s` }}></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-300 to-transparent opacity-30 animate-shimmer"
-                     style={{ animationDelay: `${index * 0.5}s` }}></div>
               </div>
-              <p className={`text-sm text-gray-300 transition-all duration-500 animate-gentle-float ${
-                isVisible ? 'animate-fade-in-up' : 'opacity-0'
+              <p className={`text-sm text-gray-300 transition-all duration-500 ${
+                isVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
               }`} 
-              style={{ 
-                animationDelay: `${(index * 200) + 300}ms`,
-                animationDuration: `${5 + index * 0.2}s`
-              }}>
+              style={{ animationDelay: `${(index * 200) + 300}ms` }}>
                 {stat.label}
               </p>
             </div>

@@ -36,14 +36,14 @@ const Team = () => {
     <section id="team" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12" ref={titleRef}>
-          <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-700 animate-breathing ${
-            titleVisible ? 'animate-scale-in' : 'opacity-0'
+          <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-700 ${
+            titleVisible ? 'animate-gentle-scale-in' : 'opacity-0'
           }`}>
             Meet The Teacher's
           </h2>
-          <p className={`text-gray-600 transition-all duration-700 animate-gentle-float ${
-            titleVisible ? 'animate-fade-in-up' : 'opacity-0'
-          }`} style={{ animationDelay: '200ms', animationDuration: '5s' }}>
+          <p className={`text-gray-600 transition-all duration-700 ${
+            titleVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
+          }`} style={{ animationDelay: '200ms' }}>
             Our provides our coaching systematic structure
           </p>
         </div>
@@ -52,46 +52,35 @@ const Team = () => {
           {team.map((member, index) => (
             <div 
               key={index} 
-              className={`text-center group transition-all duration-600 animate-gentle-sway ${
-                teamVisible ? 'animate-fade-in-up' : 'opacity-0 translate-y-8'
+              className={`text-center group transition-all duration-600 ${
+                teamVisible ? 'animate-gentle-fade-in-up' : 'opacity-0 translate-y-8'
               }`}
-              style={{ 
-                animationDelay: `${index * 200}ms`,
-                animationDuration: `${6 + index * 0.5}s`
-              }}
+              style={{ animationDelay: `${index * 200}ms` }}
             >
-              <div className="relative w-48 h-64 bg-gray-300 rounded-lg mx-auto mb-4 overflow-hidden transition-all duration-300 animate-breathing"
-                   style={{ animationDuration: `${3 + index * 0.3}s` }}>
+              <div className="relative w-48 h-64 bg-gray-300 rounded-lg mx-auto mb-4 overflow-hidden transition-all duration-300">
                 <img 
                   src={member.image} 
                   alt={member.name} 
-                  className="w-full h-full object-cover transition-transform duration-500 animate-ken-burns" 
-                  style={{ animationDuration: `${8 + index * 2}s` }}
+                  className="w-full h-full object-cover transition-transform duration-500" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent">
                   <div className="absolute bottom-4 left-4 right-4">
                     <button
                       onClick={() => handleTeacherContact(member.name)}
-                      className="w-full bg-yellow-500 text-black font-semibold py-2 px-4 rounded transition-all duration-300 animate-breathing"
-                      style={{ animationDuration: `${2.5 + index * 0.2}s` }}
+                      className="w-full bg-yellow-500 text-black font-semibold py-2 px-4 rounded transition-all duration-300"
                     >
                       Contact
                     </button>
                   </div>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-10 animate-shimmer"
-                     style={{ animationDelay: `${index * 0.7}s` }}></div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-1 transition-colors duration-300 animate-gentle-float"
-                  style={{ animationDuration: `${4 + index * 0.2}s` }}>
+              <h3 className="text-xl font-semibold text-gray-900 mb-1 transition-colors duration-300">
                 {member.name}
               </h3>
-              <p className="text-gray-600 transition-colors duration-300 mb-2 animate-bob"
-                 style={{ animationDuration: `${2.5 + index * 0.1}s` }}>
+              <p className="text-gray-600 transition-colors duration-300 mb-2">
                 {member.title}
               </p>
-              <p className="text-sm text-gray-500 animate-gentle-sway"
-                 style={{ animationDuration: `${7 + index * 0.3}s` }}>
+              <p className="text-sm text-gray-500">
                 {member.specialization}
               </p>
             </div>

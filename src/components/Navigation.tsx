@@ -28,12 +28,13 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="bg-white shadow-sm fixed w-full z-50 animate-slide-in-left">
+    <nav className="bg-white shadow-sm fixed w-full z-50 animate-gentle-slide-in-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <span 
-              className="text-xl font-bold text-gray-800 animate-slide-in-left animation-delay-200 cursor-pointer animate-breathing"
+              className="text-xl font-bold text-gray-800 animate-gentle-fade-in cursor-pointer"
+              style={{ animationDelay: '200ms' }}
               onClick={() => handleNavClick("#", "Home")}
             >
               SUMIT NEET COACHING
@@ -46,22 +47,15 @@ const Navigation = () => {
                 <button
                   key={item.name}
                   onClick={() => handleNavClick(item.href, item.section)}
-                  className={`relative transition-all duration-300 animate-fade-in animate-gentle-float ${
+                  className={`relative transition-all duration-300 animate-gentle-fade-in ${
                     item.active ? "text-yellow-600 font-medium" : "text-gray-700"
                   }`}
-                  style={{ 
-                    animationDelay: `${(index + 1) * 100}ms`,
-                    animationDuration: `${4 + index * 0.5}s`
-                  }}
+                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
                 >
                   {item.name}
-                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-yellow-600 transition-all duration-1000 animate-progress-fill ${
-                    item.active ? 'w-full' : 'w-0'
-                  }`}
-                  style={{
-                    '--target-width': item.active ? '100%' : '0%'
-                  } as React.CSSProperties}
-                  ></span>
+                  {item.active && (
+                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-yellow-600"></span>
+                  )}
                 </button>
               ))}
             </div>
@@ -72,11 +66,10 @@ const Navigation = () => {
               variant="ghost" 
               size="sm" 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="transition-transform duration-300 animate-fade-in animation-delay-300 animate-bob"
+              className="transition-transform duration-300 animate-gentle-fade-in"
+              style={{ animationDelay: '300ms' }}
             >
-              <div className={`transform transition-transform duration-300 ${isMenuOpen ? 'rotate-180' : ''}`}>
-                {isMenuOpen ? <X /> : <Menu />}
-              </div>
+              {isMenuOpen ? <X /> : <Menu />}
             </Button>
           </div>
         </div>
@@ -91,12 +84,12 @@ const Navigation = () => {
             <button
               key={item.name}
               onClick={() => handleNavClick(item.href, item.section)}
-              className={`block w-full text-left px-3 py-2 transition-all duration-300 animate-gentle-sway ${
+              className={`block w-full text-left px-3 py-2 transition-all duration-300 ${
                 item.active ? "text-yellow-600 font-medium" : "text-gray-700"
               }`}
               style={{ 
                 animationDelay: isMenuOpen ? `${index * 100}ms` : '0ms',
-                animation: isMenuOpen ? `slide-in-right 0.3s ease-out forwards, gentle-sway ${6 + index * 0.3}s ease-in-out infinite` : 'none'
+                animation: isMenuOpen ? `gentle-slide-in-right 0.3s ease-out forwards` : 'none'
               }}
             >
               {item.name}
