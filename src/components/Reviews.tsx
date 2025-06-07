@@ -1,6 +1,7 @@
 
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Reviews = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
@@ -34,6 +35,14 @@ const Reviews = () => {
     return () => clearInterval(interval);
   }, [reviews.length]);
 
+  const goToPrevious = () => {
+    setCurrentReview((prev) => (prev - 1 + reviews.length) % reviews.length);
+  };
+
+  const goToNext = () => {
+    setCurrentReview((prev) => (prev + 1) % reviews.length);
+  };
+
   return (
     <section className="py-16 bg-black text-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -50,7 +59,28 @@ const Reviews = () => {
           </p>
         </div>
         
-        <div className="mb-8" ref={contentRef}>
+        <div className="mb-8 relative" ref={contentRef}>
+          {/* Navigation Arrows */}
+          <button
+            onClick={goToPrevious}
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 ${
+              contentVisible ? 'animate-fade-in' : 'opacity-0'
+            }`}
+            style={{ animationDelay: '600ms' }}
+          >
+            <ChevronLeft className="w-5 h-5 text-white" />
+          </button>
+          
+          <button
+            onClick={goToNext}
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 ${
+              contentVisible ? 'animate-fade-in' : 'opacity-0'
+            }`}
+            style={{ animationDelay: '600ms' }}
+          >
+            <ChevronRight className="w-5 h-5 text-white" />
+          </button>
+
           <div className={`w-16 h-16 bg-gray-600 rounded-full mx-auto mb-6 transition-all duration-600 hover:scale-110 hover:bg-gray-500 overflow-hidden ${
             contentVisible ? 'animate-scale-in' : 'opacity-0'
           }`}>
