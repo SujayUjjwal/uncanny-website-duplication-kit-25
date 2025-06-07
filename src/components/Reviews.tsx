@@ -59,26 +59,26 @@ const Reviews = () => {
           </p>
         </div>
         
-        <div className="mb-8 relative" ref={contentRef}>
+        <div className="mb-8 relative px-12 sm:px-16" ref={contentRef}>
           {/* Navigation Arrows */}
           <button
             onClick={goToPrevious}
-            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 ${
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 ${
               contentVisible ? 'animate-fade-in' : 'opacity-0'
             }`}
             style={{ animationDelay: '600ms' }}
           >
-            <ChevronLeft className="w-5 h-5 text-white" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </button>
           
           <button
             onClick={goToNext}
-            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 ${
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 ${
               contentVisible ? 'animate-fade-in' : 'opacity-0'
             }`}
             style={{ animationDelay: '600ms' }}
           >
-            <ChevronRight className="w-5 h-5 text-white" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </button>
 
           <div className={`w-16 h-16 bg-gray-600 rounded-full mx-auto mb-6 transition-all duration-600 hover:scale-110 hover:bg-gray-500 overflow-hidden ${

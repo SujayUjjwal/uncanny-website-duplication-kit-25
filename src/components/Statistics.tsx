@@ -1,6 +1,7 @@
 
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useEffect, useState } from "react";
+import { GraduationCap } from "lucide-react";
 
 const Statistics = () => {
   const { ref, isVisible } = useScrollAnimation();
@@ -56,6 +57,7 @@ const Statistics = () => {
               style={{ animationDelay: `${index * 200}ms` }}
             >
               <div className="relative w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 overflow-hidden">
+                <GraduationCap className="absolute top-1 w-4 h-4 text-gray-600 z-10" />
                 <span className="text-2xl font-bold text-gray-800 transition-transform duration-300 group-hover:scale-125">
                   {isVisible ? counts[index] : 0}
                 </span>
