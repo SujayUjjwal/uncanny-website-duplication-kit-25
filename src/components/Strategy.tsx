@@ -43,20 +43,20 @@ const Strategy = () => {
           {strategySteps.map((step, index) => (
             <div 
               key={index} 
-              className={`text-center group transition-all duration-600 hover:scale-105 ${
+              className={`text-center group transition-all duration-700 hover:transform hover:translate-y-[-8px] ${
                 stepsVisible ? 'animate-fade-in-up' : 'opacity-0 translate-y-8'
               }`}
               style={{ animationDelay: `${index * 150}ms` }}
             >
-              <div className="relative w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4 transition-all duration-300 group-hover:bg-yellow-600 group-hover:scale-110 group-hover:rotate-12">
-                <span className="transition-transform duration-300 group-hover:scale-125">
+              <div className="relative w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4 transition-all duration-500 group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:to-yellow-600 group-hover:shadow-lg group-hover:shadow-yellow-500/30">
+                <span className="transition-all duration-300 group-hover:font-extrabold">
                   {step.number}
                 </span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3 transition-colors duration-300 group-hover:text-yellow-600">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 transition-all duration-300 group-hover:text-yellow-600 group-hover:font-bold">
                 {step.title}
               </h3>
-              <p className="text-gray-600 text-sm leading-relaxed transition-colors duration-300 group-hover:text-gray-800">
+              <p className="text-gray-600 text-sm leading-relaxed transition-all duration-300 group-hover:text-gray-800">
                 {step.description}
               </p>
             </div>
