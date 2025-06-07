@@ -23,7 +23,7 @@ const Reviews = () => {
         
         <div className="mb-8" ref={contentRef}>
           <div className={`w-16 h-16 bg-gray-600 rounded-full mx-auto mb-6 transition-all duration-600 hover:scale-110 hover:bg-gray-500 ${
-            contentVisible ? 'animate-bounce-in' : 'opacity-0 scale-75'
+            contentVisible ? 'animate-scale-in' : 'opacity-0'
           }`}>
           </div>
           <blockquote className={`text-lg italic mb-6 transition-all duration-700 ${
@@ -41,7 +41,7 @@ const Reviews = () => {
         <div className={`flex justify-center space-x-2 transition-all duration-700 ${
           contentVisible ? 'animate-fade-in-up' : 'opacity-0'
         }`} style={{ animationDelay: '700ms' }}>
-          <div className="w-2 h-2 bg-yellow-500 rounded-full transition-all duration-300 hover:scale-150 animate-float"></div>
+          <div className="w-2 h-2 bg-yellow-500 rounded-full transition-all duration-300 hover:scale-150"></div>
           <div className="w-2 h-2 bg-gray-600 rounded-full transition-all duration-300 hover:scale-150 hover:bg-yellow-500 cursor-pointer"></div>
           <div className="w-2 h-2 bg-gray-600 rounded-full transition-all duration-300 hover:scale-150 hover:bg-yellow-500 cursor-pointer"></div>
         </div>
