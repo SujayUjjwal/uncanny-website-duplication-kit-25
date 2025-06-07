@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useContent } from "@/contexts/ContentContext";
 
 interface EnrollmentFormProps {
   open: boolean;
@@ -16,6 +17,7 @@ interface EnrollmentFormProps {
 }
 
 const EnrollmentForm = ({ open, onOpenChange }: EnrollmentFormProps) => {
+  const { addEnrollmentSubmission } = useContent();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -41,6 +43,10 @@ const EnrollmentForm = ({ open, onOpenChange }: EnrollmentFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    
+    // Save to context/localStorage
+    addEnrollmentSubmission(formData);
+    
     console.log('Enrollment form submitted:', formData);
     
     // Simulate form submission

@@ -1,12 +1,17 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { WebsiteContent } from '@/types/content';
+import { WebsiteContent, EnrollmentSubmission, RegistrationSubmission, ContactSubmission } from '@/types/content';
 
 interface ContentContextType {
   content: WebsiteContent;
   updateContent: (section: keyof WebsiteContent, data: any) => void;
   exportContent: () => string;
   importContent: (jsonData: string) => boolean;
+  addEnrollmentSubmission: (submission: Omit<EnrollmentSubmission, 'id' | 'submittedAt' | 'status'>) => void;
+  addRegistrationSubmission: (submission: Omit<RegistrationSubmission, 'id' | 'submittedAt' | 'status'>) => void;
+  addContactSubmission: (submission: Omit<ContactSubmission, 'id' | 'submittedAt' | 'status'>) => void;
+  updateSubmissionStatus: (type: 'enrollments' | 'registrations' | 'contacts', id: string, status: string) => void;
+  deleteSubmission: (type: 'enrollments' | 'registrations' | 'contacts', id: string) => void;
 }
 
 const defaultContent: WebsiteContent = {
@@ -98,6 +103,11 @@ const defaultContent: WebsiteContent = {
   },
   footer: {
     text: "© 2024 Sumit NEET Coaching. All rights reserved."
+  },
+  submissions: {
+    enrollments: [],
+    registrations: [],
+    contacts: []
   }
 };
 
@@ -111,6 +121,14 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
     if (savedContent) {
       try {
         const parsedContent = JSON.parse(savedContent);
+        // Ensure submissions structure exists for backward compatibility
+        if (!parsedContent.submissions) {
+          parsedContent.submissions = {
+            enrollments: [],
+            registrations: [],
+            contacts: []
+          };
+        }
         setContent(parsedContent);
       } catch (error) {
         console.error('Failed to parse saved content:', error);
@@ -118,13 +136,95 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  const saveToStorage = (newContent: WebsiteContent) => {
+    setContent(newContent);
+    localStorage.setItem('website-content', JSON.stringify(newContent));
+  };
+
   const updateContent = (section: keyof WebsiteContent, data: any) => {
     const newContent = {
       ...content,
       [section]: data
     };
-    setContent(newContent);
-    localStorage.setItem('website-content', JSON.stringify(newContent));
+    saveToStorage(newContent);
+  };
+
+  const addEnrollmentSubmission = (submission: Omit<EnrollmentSubmission, 'id' | 'submittedAt' | 'status'>) => {
+    const newSubmission: EnrollmentSubmission = {
+      ...submission,
+      id: Date.now().toString(),
+      status: 'New',
+      submittedAt: new Date().toISOString()
+    };
+    
+    const newContent = {
+      ...content,
+      submissions: {
+        ...content.submissions,
+        enrollments: [...content.submissions.enrollments, newSubmission]
+      }
+    };
+    saveToStorage(newContent);
+  };
+
+  const addRegistrationSubmission = (submission: Omit<RegistrationSubmission, 'id' | 'submittedAt' | 'status'>) => {
+    const newSubmission: RegistrationSubmission = {
+      ...submission,
+      id: Date.now().toString(),
+      status: 'New',
+      submittedAt: new Date().toISOString()
+    };
+    
+    const newContent = {
+      ...content,
+      submissions: {
+        ...content.submissions,
+        registrations: [...content.submissions.registrations, newSubmission]
+      }
+    };
+    saveToStorage(newContent);
+  };
+
+  const addContactSubmission = (submission: Omit<ContactSubmission, 'id' | 'submittedAt' | 'status'>) => {
+    const newSubmission: ContactSubmission = {
+      ...submission,
+      id: Date.now().toString(),
+      status: 'New',
+      submittedAt: new Date().toISOString()
+    };
+    
+    const newContent = {
+      ...content,
+      submissions: {
+        ...content.submissions,
+        contacts: [...content.submissions.contacts, newSubmission]
+      }
+    };
+    saveToStorage(newContent);
+  };
+
+  const updateSubmissionStatus = (type: 'enrollments' | 'registrations' | 'contacts', id: string, status: string) => {
+    const newContent = {
+      ...content,
+      submissions: {
+        ...content.submissions,
+        [type]: content.submissions[type].map(submission => 
+          submission.id === id ? { ...submission, status } : submission
+        )
+      }
+    };
+    saveToStorage(newContent);
+  };
+
+  const deleteSubmission = (type: 'enrollments' | 'registrations' | 'contacts', id: string) => {
+    const newContent = {
+      ...content,
+      submissions: {
+        ...content.submissions,
+        [type]: content.submissions[type].filter(submission => submission.id !== id)
+      }
+    };
+    saveToStorage(newContent);
   };
 
   const exportContent = () => {
@@ -134,8 +234,15 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
   const importContent = (jsonData: string) => {
     try {
       const importedContent = JSON.parse(jsonData);
-      setContent(importedContent);
-      localStorage.setItem('website-content', JSON.stringify(importedContent));
+      // Ensure submissions structure exists
+      if (!importedContent.submissions) {
+        importedContent.submissions = {
+          enrollments: [],
+          registrations: [],
+          contacts: []
+        };
+      }
+      saveToStorage(importedContent);
       return true;
     } catch (error) {
       console.error('Failed to import content:', error);
@@ -144,7 +251,17 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <ContentContext.Provider value={{ content, updateContent, exportContent, importContent }}>
+    <ContentContext.Provider value={{ 
+      content, 
+      updateContent, 
+      exportContent, 
+      importContent,
+      addEnrollmentSubmission,
+      addRegistrationSubmission,
+      addContactSubmission,
+      updateSubmissionStatus,
+      deleteSubmission
+    }}>
       {children}
     </ContentContext.Provider>
   );

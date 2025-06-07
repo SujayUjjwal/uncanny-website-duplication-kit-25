@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useContent } from "@/contexts/ContentContext";
 
 interface RegistrationFormProps {
   open: boolean;
@@ -16,6 +17,7 @@ interface RegistrationFormProps {
 }
 
 const RegistrationForm = ({ open, onOpenChange }: RegistrationFormProps) => {
+  const { addRegistrationSubmission } = useContent();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,6 +38,10 @@ const RegistrationForm = ({ open, onOpenChange }: RegistrationFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    
+    // Save to context/localStorage
+    addRegistrationSubmission(formData);
+    
     console.log('Registration form submitted:', formData);
     
     // Simulate form submission

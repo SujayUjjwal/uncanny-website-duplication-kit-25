@@ -88,6 +88,48 @@ export interface ContactContent {
   hours: string;
 }
 
+export interface EnrollmentSubmission {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  dateOfBirth: string;
+  education: string;
+  courseSelection: string;
+  parentName: string;
+  parentPhone: string;
+  address: string;
+  message: string;
+  status: 'New' | 'Contacted' | 'Processed' | 'Enrolled' | 'Rejected';
+  submittedAt: string;
+}
+
+export interface RegistrationSubmission {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  courseInterest: string;
+  message: string;
+  status: 'New' | 'Contacted' | 'Processed' | 'Registered' | 'Rejected';
+  submittedAt: string;
+}
+
+export interface ContactSubmission {
+  id: string;
+  name: string;
+  email: string;
+  message: string;
+  status: 'New' | 'Contacted' | 'Processed' | 'Resolved';
+  submittedAt: string;
+}
+
+export interface FormSubmissions {
+  enrollments: EnrollmentSubmission[];
+  registrations: RegistrationSubmission[];
+  contacts: ContactSubmission[];
+}
+
 export interface WebsiteContent {
   navigation: NavigationContent;
   hero: HeroContent;
@@ -99,4 +141,5 @@ export interface WebsiteContent {
   footer: {
     text: string;
   };
+  submissions: FormSubmissions;
 }

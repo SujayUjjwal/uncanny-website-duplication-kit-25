@@ -5,10 +5,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState } from "react";
+import { useContent } from "@/contexts/ContentContext";
 
 const Contact = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation();
+  const { addContactSubmission } = useContent();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -58,6 +60,10 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    
+    // Save to context/localStorage
+    addContactSubmission(formData);
+    
     console.log('Form submitted:', formData);
     
     // Simulate form submission
