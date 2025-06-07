@@ -52,7 +52,6 @@ const Strategy = () => {
                 <span className="transition-transform duration-300 group-hover:scale-125">
                   {step.number}
                 </span>
-                <div className="absolute inset-0 rounded-full bg-yellow-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300 animate-pulse"></div>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3 transition-colors duration-300 group-hover:text-yellow-600">
                 {step.title}
