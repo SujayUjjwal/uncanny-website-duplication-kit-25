@@ -1,7 +1,13 @@
+import { useState } from "react";
 import { Facebook, Twitter, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import RegistrationForm from "./RegistrationForm";
+import EnrollmentForm from "./EnrollmentForm";
 
 const Hero = () => {
+  const [registrationOpen, setRegistrationOpen] = useState(false);
+  const [enrollmentOpen, setEnrollmentOpen] = useState(false);
+
   const handleSocialClick = (platform: string) => {
     console.log(`Opening ${platform}`);
     const urls = {
@@ -14,23 +20,12 @@ const Hero = () => {
 
   const handleRegisterClick = () => {
     console.log('Register for Seminar clicked');
-    // Scroll to contact section or open registration form
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      alert('Registration form coming soon! Please contact us for more information.');
-    }
+    setRegistrationOpen(true);
   };
 
   const handleEnrollClick = () => {
     console.log('Enroll button clicked');
-    // Open enrollment form or redirect to enrollment page
-    alert('Enrollment is now open! Please fill out the contact form below or call us directly.');
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    setEnrollmentOpen(true);
   };
 
   return (
@@ -121,15 +116,27 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* Fixed Enroll Button */}
+      {/* Fixed Enroll Button - Animation Removed */}
       <div className="fixed bottom-6 right-6 z-50">
         <Button
           onClick={handleEnrollClick}
-          className="bg-yellow-500 text-black font-bold px-6 py-4 text-lg rounded-full shadow-lg hover:bg-yellow-400 transition-all duration-300 transform hover:scale-110 animate-pulse"
+          className="bg-yellow-500 text-black font-bold px-6 py-4 text-lg rounded-full shadow-lg hover:bg-yellow-400 transition-all duration-300 transform hover:scale-110"
         >
           Enroll Now
         </Button>
       </div>
+
+      {/* Registration Form Modal */}
+      <RegistrationForm 
+        open={registrationOpen} 
+        onOpenChange={setRegistrationOpen} 
+      />
+
+      {/* Enrollment Form Modal */}
+      <EnrollmentForm 
+        open={enrollmentOpen} 
+        onOpenChange={setEnrollmentOpen} 
+      />
     </>
   );
 };
