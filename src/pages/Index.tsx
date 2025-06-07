@@ -80,6 +80,7 @@ const Index = () => {
     title: "BIOLOGY",
     image: "/lovable-uploads/ab2cb6d5-bf7e-467e-8cef-dfaf2945b20a.png"
   }];
+  
   return <div className="min-h-screen bg-white">
       {/* Navigation */}
       <nav className="bg-white shadow-sm fixed w-full z-50">
@@ -130,7 +131,7 @@ const Index = () => {
         
         <div className="relative z-10 text-center text-white px-4">
           <h1 className="text-4xl font-bold mb-6 tracking-wide md:text-8xl">
-            WELCOME TO SUMIT NEET<br />COACHING
+            WELCOME TO SUMIT NEET<br /><br />COACHING
           </h1>
           <div className="flex items-center justify-center mb-8">
             <div className="h-0.5 w-16 bg-yellow-500 mr-4" />
