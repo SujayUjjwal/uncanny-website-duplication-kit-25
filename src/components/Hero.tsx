@@ -22,20 +22,20 @@ const Hero = () => {
       <div className="relative z-10 text-center text-white px-4 max-w-7xl mx-auto">
         {/* Mobile and Tablet View */}
         <div className="block lg:hidden">
-          <h1 className="text-2xl font-bold mb-3 tracking-wide animate-fade-in-up sm:text-3xl md:text-4xl">
+          <h1 className="text-2xl font-bold mb-3 tracking-wide animate-fade-in-up sm:text-3xl md:text-4xl font-playfair">
             WELCOME TO
           </h1>
-          <h1 className="text-2xl font-bold mb-6 tracking-wide animate-fade-in-up animation-delay-500 sm:text-3xl md:text-4xl">
+          <h1 className="text-2xl font-bold mb-6 tracking-wide animate-fade-in-up animation-delay-500 sm:text-3xl md:text-4xl font-playfair">
             SUMIT NEET COACHING
           </h1>
         </div>
         
         {/* Desktop View */}
         <div className="hidden lg:block">
-          <h1 className="text-6xl font-bold mb-6 tracking-wide xl:text-8xl animate-typewriter overflow-hidden whitespace-nowrap border-r-4 border-yellow-500 mx-auto max-w-fit">
+          <h1 className="text-6xl font-bold mb-6 tracking-wide xl:text-8xl animate-typewriter overflow-hidden whitespace-nowrap border-r-4 border-yellow-500 mx-auto max-w-fit font-playfair">
             WELCOME TO SUMIT NEET
           </h1>
-          <h1 className="text-6xl font-bold mb-6 tracking-wide xl:text-8xl animate-fade-in-up animation-delay-3000">
+          <h1 className="text-6xl font-bold mb-6 tracking-wide xl:text-8xl animate-fade-in-up animation-delay-3000 font-playfair">
             COACHING
           </h1>
         </div>
