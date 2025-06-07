@@ -46,14 +46,7 @@ const Hero = () => {
           </div>
           
           {/* Desktop View */}
-          <div className="hidden lg:block">
-            <h1 className="text-6xl font-bold mb-6 tracking-wide animate-typewriter overflow-hidden whitespace-nowrap border-r-4 border-yellow-500 mx-auto max-w-fit xl:text-7xl">
-              WELCOME TO SUMIT NEET
-            </h1>
-            <h1 className="text-6xl font-bold mb-6 tracking-wide animate-gentle-fade-in-up xl:text-7xl" style={{
-            animationDelay: '3000ms'
-          }}>WELCOME TO SUMIT NEET </h1>
-          </div>
+          
           
           <div className="flex items-center justify-center mb-8 animate-gentle-fade-in-up" style={{
           animationDelay: '4000ms'
