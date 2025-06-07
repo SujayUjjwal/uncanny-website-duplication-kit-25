@@ -33,7 +33,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <span 
-              className="text-xl font-bold text-gray-800 animate-slide-in-left animation-delay-200 cursor-pointer"
+              className="text-xl font-bold text-gray-800 animate-slide-in-left animation-delay-200 cursor-pointer animate-breathing"
               onClick={() => handleNavClick("#", "Home")}
             >
               SUMIT NEET COACHING
@@ -46,13 +46,22 @@ const Navigation = () => {
                 <button
                   key={item.name}
                   onClick={() => handleNavClick(item.href, item.section)}
-                  className={`relative transition-all duration-300 hover:scale-105 animate-fade-in ${
-                    item.active ? "text-yellow-600 font-medium" : "text-gray-700 hover:text-yellow-600"
+                  className={`relative transition-all duration-300 animate-fade-in animate-gentle-float ${
+                    item.active ? "text-yellow-600 font-medium" : "text-gray-700"
                   }`}
-                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
+                  style={{ 
+                    animationDelay: `${(index + 1) * 100}ms`,
+                    animationDuration: `${4 + index * 0.5}s`
+                  }}
                 >
                   {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-600 transition-all duration-300 hover:w-full"></span>
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-yellow-600 transition-all duration-1000 animate-progress-fill ${
+                    item.active ? 'w-full' : 'w-0'
+                  }`}
+                  style={{
+                    '--target-width': item.active ? '100%' : '0%'
+                  } as React.CSSProperties}
+                  ></span>
                 </button>
               ))}
             </div>
@@ -63,7 +72,7 @@ const Navigation = () => {
               variant="ghost" 
               size="sm" 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="transition-transform duration-300 hover:scale-110 animate-fade-in animation-delay-300"
+              className="transition-transform duration-300 animate-fade-in animation-delay-300 animate-bob"
             >
               <div className={`transform transition-transform duration-300 ${isMenuOpen ? 'rotate-180' : ''}`}>
                 {isMenuOpen ? <X /> : <Menu />}
@@ -82,12 +91,12 @@ const Navigation = () => {
             <button
               key={item.name}
               onClick={() => handleNavClick(item.href, item.section)}
-              className={`block w-full text-left px-3 py-2 transition-all duration-300 hover:bg-gray-100 hover:translate-x-2 ${
+              className={`block w-full text-left px-3 py-2 transition-all duration-300 animate-gentle-sway ${
                 item.active ? "text-yellow-600 font-medium" : "text-gray-700"
               }`}
               style={{ 
                 animationDelay: isMenuOpen ? `${index * 100}ms` : '0ms',
-                animation: isMenuOpen ? 'slide-in-right 0.3s ease-out forwards' : 'none'
+                animation: isMenuOpen ? `slide-in-right 0.3s ease-out forwards, gentle-sway ${6 + index * 0.3}s ease-in-out infinite` : 'none'
               }}
             >
               {item.name}

@@ -176,6 +176,98 @@ export default {
 					'50%': {
 						transform: 'translateY(-10px)'
 					}
+				},
+				'gentle-float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-8px)'
+					}
+				},
+				'gentle-sway': {
+					'0%, 100%': {
+						transform: 'translateX(0px) rotate(0deg)'
+					},
+					'25%': {
+						transform: 'translateX(2px) rotate(0.5deg)'
+					},
+					'75%': {
+						transform: 'translateX(-2px) rotate(-0.5deg)'
+					}
+				},
+				'breathing': {
+					'0%, 100%': {
+						transform: 'scale(1)'
+					},
+					'50%': {
+						transform: 'scale(1.02)'
+					}
+				},
+				'shimmer': {
+					'0%': {
+						transform: 'translateX(-100%)'
+					},
+					'100%': {
+						transform: 'translateX(100%)'
+					}
+				},
+				'orbital': {
+					'0%': {
+						transform: 'rotate(0deg) translateX(3px) rotate(0deg)'
+					},
+					'100%': {
+						transform: 'rotate(360deg) translateX(3px) rotate(-360deg)'
+					}
+				},
+				'color-cycle': {
+					'0%, 100%': {
+						backgroundColor: 'hsl(45, 100%, 60%)'
+					},
+					'25%': {
+						backgroundColor: 'hsl(200, 100%, 60%)'
+					},
+					'50%': {
+						backgroundColor: 'hsl(320, 100%, 60%)'
+					},
+					'75%': {
+						backgroundColor: 'hsl(120, 100%, 60%)'
+					}
+				},
+				'rotate-slow': {
+					'0%': {
+						transform: 'rotate(0deg)'
+					},
+					'100%': {
+						transform: 'rotate(360deg)'
+					}
+				},
+				'progress-fill': {
+					'0%': {
+						width: '0%'
+					},
+					'70%': {
+						width: 'var(--target-width)'
+					},
+					'100%': {
+						width: 'var(--target-width)'
+					}
+				},
+				'ken-burns': {
+					'0%': {
+						transform: 'scale(1) translate(0, 0)'
+					},
+					'100%': {
+						transform: 'scale(1.05) translate(-2px, -2px)'
+					}
+				},
+				'bob': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-4px)'
+					}
 				}
 			},
 			animation: {
@@ -189,7 +281,17 @@ export default {
 				'bounce-in': 'bounce-in 0.8s ease-out',
 				'expand-width': 'expand-width 0.8s ease-out',
 				'typewriter': 'typewriter 3s steps(40) 1s both',
-				'float': 'float 3s ease-in-out infinite'
+				'float': 'float 3s ease-in-out infinite',
+				'gentle-float': 'gentle-float 4s ease-in-out infinite',
+				'gentle-sway': 'gentle-sway 6s ease-in-out infinite',
+				'breathing': 'breathing 3s ease-in-out infinite',
+				'shimmer': 'shimmer 2s ease-in-out infinite',
+				'orbital': 'orbital 8s linear infinite',
+				'color-cycle': 'color-cycle 6s ease-in-out infinite',
+				'rotate-slow': 'rotate-slow 10s linear infinite',
+				'progress-fill': 'progress-fill 4s ease-in-out infinite',
+				'ken-burns': 'ken-burns 8s ease-in-out infinite alternate',
+				'bob': 'bob 2s ease-in-out infinite'
 			}
 		}
 	},
