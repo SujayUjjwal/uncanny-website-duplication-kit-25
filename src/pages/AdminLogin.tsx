@@ -4,20 +4,49 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Lock, Eye, EyeOff } from 'lucide-react';
+import { Lock, Eye, EyeOff, Mail, UserPlus } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const AdminLogin = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
-  const { login } = useAuth();
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { login, signUp } = useAuth();
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(password)) {
-      setError('');
-    } else {
-      setError('Invalid password. Please try again.');
+    setIsLoading(true);
+
+    try {
+      const result = isSignUp ? 
+        await signUp(email, password) : 
+        await login(email, password);
+
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: isSignUp ? 
+            "Account created successfully! Please check your email to verify your account." : 
+            "Logged in successfully!",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Authentication failed. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -29,17 +58,35 @@ const AdminLogin = () => {
             <Lock className="w-6 h-6 text-white" />
           </div>
           <CardTitle className="text-2xl font-bold text-gray-900">
-            Content Management System
+            {isSignUp ? 'Create Admin Account' : 'Admin Login'}
           </CardTitle>
           <p className="text-gray-600 mt-2">
-            Admin access to manage website content
+            {isSignUp ? 'Create your admin account to manage the website' : 'Sign in to access the admin dashboard'}
           </p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-medium text-gray-700">
+                Email Address
+              </label>
+              <div className="relative">
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="pl-10"
+                  required
+                />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-medium text-gray-700">
-                Admin Password
+                Password
               </label>
               <div className="relative">
                 <Input
@@ -47,9 +94,10 @@ const AdminLogin = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter admin password"
+                  placeholder="Enter your password"
                   className="pr-10"
                   required
+                  minLength={6}
                 />
                 <button
                   type="button"
@@ -61,20 +109,31 @@ const AdminLogin = () => {
               </div>
             </div>
             
-            {error && (
-              <div className="text-red-600 text-sm bg-red-50 p-3 rounded-md">
-                {error}
-              </div>
-            )}
-            
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-              Access Admin Panel
+            <Button 
+              type="submit" 
+              className="w-full bg-blue-600 hover:bg-blue-700"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Processing...' : (isSignUp ? 'Create Account' : 'Sign In')}
             </Button>
           </form>
           
-          <div className="mt-6 p-4 bg-gray-50 rounded-md">
+          <div className="mt-6 text-center">
+            <button
+              type="button"
+              onClick={() => setIsSignUp(!isSignUp)}
+              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+            >
+              {isSignUp ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
+            </button>
+          </div>
+          
+          <div className="mt-4 p-4 bg-gray-50 rounded-md">
             <p className="text-xs text-gray-600 text-center">
-              Default password: admin123
+              {isSignUp ? 
+                'Create an admin account to manage website content and view submissions.' :
+                'Use your admin credentials to access the dashboard.'
+              }
             </p>
           </div>
         </CardContent>

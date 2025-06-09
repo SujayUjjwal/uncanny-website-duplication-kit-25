@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,6 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import SeminarRegistrationManager from '@/components/admin/SeminarRegistrationManager';
 import ContactMessageManager from '@/components/admin/ContactMessageManager';
 import CourseEnrollmentManager from '@/components/admin/CourseEnrollmentManager';
+import { useAuth, useToast } from '@/hooks';
 
 type ActiveSection = 'dashboard' | 'seminar' | 'contact' | 'enrollment';
 
@@ -26,6 +26,8 @@ const AdminDashboard = () => {
     totalSubmissions: 0
   });
   const [loading, setLoading] = useState(true);
+  const { logout, user } = useAuth();
+  const { toast } = useToast();
 
   const fetchStats = async () => {
     try {
@@ -56,13 +58,37 @@ const AdminDashboard = () => {
     fetchStats();
   }, []);
 
+  const handleLogout = async () => {
+    const result = await logout();
+    if (result.success) {
+      toast({
+        title: "Success",
+        description: "Logged out successfully!",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: result.error || "Failed to logout",
+        variant: "destructive",
+      });
+    }
+  };
+
   const renderDashboard = () => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">CMS Dashboard</h1>
-        <div className="flex items-center space-x-2 text-sm text-gray-500">
-          <BarChart3 className="w-4 h-4" />
-          <span>Real-time Data</span>
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">CMS Dashboard</h1>
+          <p className="text-sm text-gray-600 mt-1">Welcome back, {user?.email}</p>
+        </div>
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 text-sm text-gray-500">
+            <BarChart3 className="w-4 h-4" />
+            <span>Real-time Data</span>
+          </div>
+          <Button onClick={handleLogout} variant="outline" size="sm">
+            Logout
+          </Button>
         </div>
       </div>
 
