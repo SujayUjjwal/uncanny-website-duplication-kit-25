@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -78,7 +79,7 @@ const SeminarRegistrationManager = () => {
     return matchesSearch && matchesStatus;
   });
 
-  const handleStatusChange = async (id: string, newStatus: string) => {
+  const handleStatusChange = async (id: string, newStatus: SubmissionStatus) => {
     try {
       const { error } = await supabase
         .from('seminar_registrations')
@@ -94,7 +95,7 @@ const SeminarRegistrationManager = () => {
         });
       } else {
         setRegistrations(prev => 
-          prev.map(reg => reg.id === id ? { ...reg, status: newStatus as SubmissionStatus } : reg)
+          prev.map(reg => reg.id === id ? { ...reg, status: newStatus } : reg)
         );
         toast({
           title: "Success",
@@ -245,7 +246,7 @@ const SeminarRegistrationManager = () => {
                   </TableCell>
                   <TableCell>{registration.course_interest}</TableCell>
                   <TableCell>
-                    <Select value={registration.status} onValueChange={(value) => handleStatusChange(registration.id, value)}>
+                    <Select value={registration.status} onValueChange={(value: SubmissionStatus) => handleStatusChange(registration.id, value)}>
                       <SelectTrigger className="w-[120px]">
                         <Badge className={getStatusBadgeColor(registration.status)}>
                           {registration.status}

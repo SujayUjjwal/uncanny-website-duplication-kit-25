@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -83,7 +84,7 @@ const CourseEnrollmentManager = () => {
     return matchesSearch && matchesStatus;
   });
 
-  const handleStatusChange = async (id: string, newStatus: string) => {
+  const handleStatusChange = async (id: string, newStatus: SubmissionStatus) => {
     try {
       const { error } = await supabase
         .from('course_enrollments')
@@ -99,7 +100,7 @@ const CourseEnrollmentManager = () => {
         });
       } else {
         setEnrollments(prev => 
-          prev.map(enrollment => enrollment.id === id ? { ...enrollment, status: newStatus as SubmissionStatus } : enrollment)
+          prev.map(enrollment => enrollment.id === id ? { ...enrollment, status: newStatus } : enrollment)
         );
         toast({
           title: "Success",
@@ -267,7 +268,7 @@ const CourseEnrollmentManager = () => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Select value={enrollment.status} onValueChange={(value) => handleStatusChange(enrollment.id, value)}>
+                    <Select value={enrollment.status} onValueChange={(value: SubmissionStatus) => handleStatusChange(enrollment.id, value)}>
                       <SelectTrigger className="w-[120px]">
                         <Badge className={getStatusBadgeColor(enrollment.status)}>
                           {enrollment.status}

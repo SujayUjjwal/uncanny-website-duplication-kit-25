@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -76,7 +77,7 @@ const ContactMessageManager = () => {
     return matchesSearch && matchesStatus;
   });
 
-  const handleStatusChange = async (id: string, newStatus: string) => {
+  const handleStatusChange = async (id: string, newStatus: SubmissionStatus) => {
     try {
       const { error } = await supabase
         .from('contact_messages')
@@ -92,7 +93,7 @@ const ContactMessageManager = () => {
         });
       } else {
         setContacts(prev => 
-          prev.map(contact => contact.id === id ? { ...contact, status: newStatus as SubmissionStatus } : contact)
+          prev.map(contact => contact.id === id ? { ...contact, status: newStatus } : contact)
         );
         toast({
           title: "Success",
@@ -231,7 +232,7 @@ const ContactMessageManager = () => {
                     <div className="max-w-xs truncate">{contact.message}</div>
                   </TableCell>
                   <TableCell>
-                    <Select value={contact.status} onValueChange={(value) => handleStatusChange(contact.id, value)}>
+                    <Select value={contact.status} onValueChange={(value: SubmissionStatus) => handleStatusChange(contact.id, value)}>
                       <SelectTrigger className="w-[120px]">
                         <Badge className={getStatusBadgeColor(contact.status)}>
                           {contact.status}
