@@ -9,7 +9,123 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      contact_messages: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          message: string
+          name: string
+          status: Database["public"]["Enums"]["submission_status"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          message: string
+          name: string
+          status?: Database["public"]["Enums"]["submission_status"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          status?: Database["public"]["Enums"]["submission_status"] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      course_enrollments: {
+        Row: {
+          address: string
+          course_selection: string
+          created_at: string | null
+          date_of_birth: string
+          education: string
+          email: string
+          id: string
+          message: string | null
+          name: string
+          parent_name: string
+          parent_phone: string
+          phone: string
+          status: Database["public"]["Enums"]["submission_status"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          address: string
+          course_selection: string
+          created_at?: string | null
+          date_of_birth: string
+          education: string
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          parent_name: string
+          parent_phone: string
+          phone: string
+          status?: Database["public"]["Enums"]["submission_status"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string
+          course_selection?: string
+          created_at?: string | null
+          date_of_birth?: string
+          education?: string
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          parent_name?: string
+          parent_phone?: string
+          phone?: string
+          status?: Database["public"]["Enums"]["submission_status"] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      seminar_registrations: {
+        Row: {
+          course_interest: string | null
+          created_at: string | null
+          email: string
+          id: string
+          message: string | null
+          name: string
+          phone: string
+          status: Database["public"]["Enums"]["submission_status"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          course_interest?: string | null
+          created_at?: string | null
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          phone: string
+          status?: Database["public"]["Enums"]["submission_status"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          course_interest?: string | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          phone?: string
+          status?: Database["public"]["Enums"]["submission_status"] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +134,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      submission_status:
+        | "New"
+        | "Contacted"
+        | "Processed"
+        | "Resolved"
+        | "Rejected"
+        | "Enrolled"
+        | "Registered"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +256,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      submission_status: [
+        "New",
+        "Contacted",
+        "Processed",
+        "Resolved",
+        "Rejected",
+        "Enrolled",
+        "Registered",
+      ],
+    },
   },
 } as const

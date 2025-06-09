@@ -9,7 +9,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useContent } from "@/contexts/ContentContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface EnrollmentFormProps {
   open: boolean;
@@ -17,7 +18,7 @@ interface EnrollmentFormProps {
 }
 
 const EnrollmentForm = ({ open, onOpenChange }: EnrollmentFormProps) => {
-  const { addEnrollmentSubmission } = useContent();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -44,29 +45,61 @@ const EnrollmentForm = ({ open, onOpenChange }: EnrollmentFormProps) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Save to context/localStorage
-    addEnrollmentSubmission(formData);
-    
-    console.log('Enrollment form submitted:', formData);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      alert(`Thank you ${formData.name}! Your enrollment application has been received. Our admissions team will contact you at ${formData.email} within 24 hours.`);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        dateOfBirth: '',
-        education: '',
-        courseSelection: '',
-        parentName: '',
-        parentPhone: '',
-        address: '',
-        message: ''
+    try {
+      const { error } = await supabase
+        .from('course_enrollments')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            date_of_birth: formData.dateOfBirth,
+            education: formData.education,
+            course_selection: formData.courseSelection,
+            parent_name: formData.parentName,
+            parent_phone: formData.parentPhone,
+            address: formData.address,
+            message: formData.message
+          }
+        ]);
+
+      if (error) {
+        console.error('Error submitting enrollment:', error);
+        toast({
+          title: "Error",
+          description: "Failed to submit enrollment. Please try again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Success!",
+          description: `Thank you ${formData.name}! Your enrollment application has been received. Our admissions team will contact you at ${formData.email} within 24 hours.`,
+        });
+        
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          dateOfBirth: '',
+          education: '',
+          courseSelection: '',
+          parentName: '',
+          parentPhone: '',
+          address: '',
+          message: ''
+        });
+        onOpenChange(false);
+      }
+    } catch (error) {
+      console.error('Error submitting enrollment:', error);
+      toast({
+        title: "Error",
+        description: "Failed to submit enrollment. Please try again.",
+        variant: "destructive",
       });
+    } finally {
       setIsSubmitting(false);
-      onOpenChange(false);
-    }, 1000);
+    }
   };
 
   return (

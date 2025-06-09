@@ -115,7 +115,7 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* Fixed Enroll Button - Animation Removed */}
+      {/* Fixed Enroll Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <Button onClick={handleEnrollClick} className="bg-yellow-500 text-black font-bold px-6 py-4 text-lg rounded-full shadow-lg hover:bg-yellow-400 transition-all duration-300 transform hover:scale-110">
           Enroll Now

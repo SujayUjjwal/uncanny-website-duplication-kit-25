@@ -5,12 +5,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState } from "react";
-import { useContent } from "@/contexts/ContentContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation();
-  const { addContactSubmission } = useContent();
+  const { toast } = useToast();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -61,21 +62,46 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Save to context/localStorage
-    addContactSubmission(formData);
-    
-    console.log('Form submitted:', formData);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      alert(`Thank you ${formData.name}! We have received your message and will get back to you at ${formData.email} soon.`);
-      setFormData({
-        name: '',
-        email: '',
-        message: ''
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            message: formData.message
+          }
+        ]);
+
+      if (error) {
+        console.error('Error submitting contact form:', error);
+        toast({
+          title: "Error",
+          description: "Failed to send message. Please try again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Success!",
+          description: `Thank you ${formData.name}! We have received your message and will get back to you at ${formData.email} soon.`,
+        });
+        
+        setFormData({
+          name: '',
+          email: '',
+          message: ''
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
       });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (

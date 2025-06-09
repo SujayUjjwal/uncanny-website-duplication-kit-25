@@ -9,7 +9,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useContent } from "@/contexts/ContentContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface RegistrationFormProps {
   open: boolean;
@@ -17,7 +18,7 @@ interface RegistrationFormProps {
 }
 
 const RegistrationForm = ({ open, onOpenChange }: RegistrationFormProps) => {
-  const { addRegistrationSubmission } = useContent();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,24 +40,51 @@ const RegistrationForm = ({ open, onOpenChange }: RegistrationFormProps) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Save to context/localStorage
-    addRegistrationSubmission(formData);
-    
-    console.log('Registration form submitted:', formData);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      alert(`Thank you ${formData.name}! Your seminar registration has been received. We'll contact you at ${formData.email} with seminar details.`);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        courseInterest: '',
-        message: ''
+    try {
+      const { error } = await supabase
+        .from('seminar_registrations')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            course_interest: formData.courseInterest,
+            message: formData.message
+          }
+        ]);
+
+      if (error) {
+        console.error('Error submitting registration:', error);
+        toast({
+          title: "Error",
+          description: "Failed to submit registration. Please try again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Success!",
+          description: `Thank you ${formData.name}! Your seminar registration has been received. We'll contact you at ${formData.email} with seminar details.`,
+        });
+        
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          courseInterest: '',
+          message: ''
+        });
+        onOpenChange(false);
+      }
+    } catch (error) {
+      console.error('Error submitting registration:', error);
+      toast({
+        title: "Error",
+        description: "Failed to submit registration. Please try again.",
+        variant: "destructive",
       });
+    } finally {
       setIsSubmitting(false);
-      onOpenChange(false);
-    }, 1000);
+    }
   };
 
   return (
