@@ -6,7 +6,8 @@ import { supabase } from '@/integrations/supabase/client';
 import SeminarRegistrationManager from '@/components/admin/SeminarRegistrationManager';
 import ContactMessageManager from '@/components/admin/ContactMessageManager';
 import CourseEnrollmentManager from '@/components/admin/CourseEnrollmentManager';
-import { useAuth, useToast } from '@/hooks';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
 
 type ActiveSection = 'dashboard' | 'seminar' | 'contact' | 'enrollment';
 
