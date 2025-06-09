@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,6 +22,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+type SubmissionStatus = 'New' | 'Contacted' | 'Processed' | 'Resolved' | 'Rejected' | 'Enrolled' | 'Registered';
+
 interface SeminarRegistration {
   id: string;
   name: string;
@@ -30,7 +31,7 @@ interface SeminarRegistration {
   phone: string;
   course_interest: string;
   message: string;
-  status: string;
+  status: SubmissionStatus;
   created_at: string;
 }
 
@@ -93,7 +94,7 @@ const SeminarRegistrationManager = () => {
         });
       } else {
         setRegistrations(prev => 
-          prev.map(reg => reg.id === id ? { ...reg, status: newStatus } : reg)
+          prev.map(reg => reg.id === id ? { ...reg, status: newStatus as SubmissionStatus } : reg)
         );
         toast({
           title: "Success",

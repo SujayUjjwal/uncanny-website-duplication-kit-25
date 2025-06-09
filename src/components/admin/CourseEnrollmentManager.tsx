@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,6 +22,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+type SubmissionStatus = 'New' | 'Contacted' | 'Processed' | 'Resolved' | 'Rejected' | 'Enrolled' | 'Registered';
+
 interface CourseEnrollment {
   id: string;
   name: string;
@@ -35,7 +36,7 @@ interface CourseEnrollment {
   parent_phone: string;
   address: string;
   message: string;
-  status: string;
+  status: SubmissionStatus;
   created_at: string;
 }
 
@@ -98,7 +99,7 @@ const CourseEnrollmentManager = () => {
         });
       } else {
         setEnrollments(prev => 
-          prev.map(enrollment => enrollment.id === id ? { ...enrollment, status: newStatus } : enrollment)
+          prev.map(enrollment => enrollment.id === id ? { ...enrollment, status: newStatus as SubmissionStatus } : enrollment)
         );
         toast({
           title: "Success",

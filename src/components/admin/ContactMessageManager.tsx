@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,12 +22,14 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+type SubmissionStatus = 'New' | 'Contacted' | 'Processed' | 'Resolved' | 'Rejected' | 'Enrolled' | 'Registered';
+
 interface ContactMessage {
   id: string;
   name: string;
   email: string;
   message: string;
-  status: string;
+  status: SubmissionStatus;
   created_at: string;
 }
 
@@ -91,7 +92,7 @@ const ContactMessageManager = () => {
         });
       } else {
         setContacts(prev => 
-          prev.map(contact => contact.id === id ? { ...contact, status: newStatus } : contact)
+          prev.map(contact => contact.id === id ? { ...contact, status: newStatus as SubmissionStatus } : contact)
         );
         toast({
           title: "Success",
