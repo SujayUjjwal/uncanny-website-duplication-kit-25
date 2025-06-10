@@ -105,13 +105,26 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-16 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+      {/* Corporate Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Executive geometric patterns */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-blue-50/50 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-yellow-50/50 to-transparent rounded-full blur-2xl" />
+        
+        {/* Luxury grid overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
+        
+        {/* Premium accent lines */}
+        <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200/50 to-transparent animate-connection-line" style={{ animationDelay: '1s' }} />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12" ref={titleRef}>
-          <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-700 ${titleVisible ? 'animate-gentle-scale-in' : 'opacity-0'}`}>
+          <h2 className={`text-3xl font-bold text-gray-900 mb-4 transition-all duration-1000 ${titleVisible ? 'animate-gentle-scale-in' : 'opacity-0'}`}>
             Get in Touch
           </h2>
-          <p className={`text-gray-600 transition-all duration-700 ${titleVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'}`} style={{
+          <p className={`text-gray-600 transition-all duration-1000 ${titleVisible ? 'animate-soothing-fade-in-up' : 'opacity-0'}`} style={{
           animationDelay: '200ms'
         }}>
             Best Place to learning for coaching be the future to.
@@ -120,7 +133,7 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-12" ref={contentRef}>
           {/* Contact Info */}
-          <div className={`transition-all duration-700 ${contentVisible ? 'animate-gentle-slide-in-left' : 'opacity-0 -translate-x-8'}`}>
+          <div className={`transition-all duration-1000 ${contentVisible ? 'animate-form-reveal' : 'opacity-0 -translate-x-8'}`}>
             <h3 className="text-xl font-semibold text-gray-900 mb-6">Feel Free To Contact</h3>
             <p className="text-gray-600 mb-8">
               You may easily get in touch with us if you have any questions. Please feel free.
@@ -131,45 +144,81 @@ const Contact = () => {
                 <button
                   key={index}
                   onClick={action}
-                  className={`flex items-center space-x-3 group transition-all duration-500 w-full text-left hover:bg-gray-50 p-2 rounded-lg ${contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'}`}
-                  style={{ animationDelay: `${index * 100 + 200}ms` }}
+                  className={`flex items-center space-x-4 group transition-all duration-700 w-full text-left hover:bg-white/80 p-4 rounded-xl border border-transparent hover:border-gray-200 hover:shadow-lg backdrop-blur-sm ${contentVisible ? 'animate-corporate-slide' : 'opacity-0'}`}
+                  style={{ animationDelay: `${index * 150 + 300}ms` }}
                 >
-                  <div className="w-8 h-8 bg-black rounded flex items-center justify-center transition-all duration-300 group-hover:bg-yellow-500">
-                    <Icon className="w-4 h-4 text-white transition-transform duration-300 group-hover:text-black" />
+                  <div className="relative w-12 h-12 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:from-yellow-500 group-hover:to-yellow-600 group-hover:shadow-lg overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <Icon className="w-5 h-5 text-white relative z-10 transition-all duration-500 group-hover:scale-110" />
                   </div>
-                  <span className="text-gray-700 transition-colors duration-300 group-hover:text-black font-medium">{text}</span>
+                  <span className="text-gray-700 transition-all duration-500 group-hover:text-gray-900 font-medium flex-1">{text}</span>
                 </button>
               ))}
             </div>
           </div>
 
           {/* Contact Form */}
-          <div className={`bg-black p-8 rounded-lg transition-all duration-700 ${contentVisible ? 'animate-gentle-slide-in-right' : 'opacity-0 translate-x-8'}`}>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className={`transition-all duration-500 ${contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'}`} style={{
-              animationDelay: '300ms'
-            }}>
-                <Input type="text" name="name" placeholder="Your Name*" value={formData.name} onChange={handleInputChange} required className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 transition-all duration-300" />
-              </div>
-              
-              <div className={`transition-all duration-500 ${contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'}`} style={{
-              animationDelay: '400ms'
-            }}>
-                <Input type="email" name="email" placeholder="Your Email*" value={formData.email} onChange={handleInputChange} required className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 transition-all duration-300" />
-              </div>
-              
-              <div className={`transition-all duration-500 ${contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'}`} style={{
-              animationDelay: '500ms'
-            }}>
-                <Textarea name="message" placeholder="Your Message*" rows={5} value={formData.message} onChange={handleInputChange} required className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 transition-all duration-300" />
-              </div>
-              
-              <Button type="submit" disabled={isSubmitting} className={`w-full bg-yellow-500 text-black font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${contentVisible ? 'animate-gentle-scale-in' : 'opacity-0 scale-75'}`} style={{
-              animationDelay: '700ms'
-            }}>
-                {isSubmitting ? 'Sending...' : 'Send'}
-              </Button>
-            </form>
+          <div className={`relative transition-all duration-1000 ${contentVisible ? 'animate-form-reveal' : 'opacity-0 translate-x-8'}`} style={{ animationDelay: '200ms' }}>
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black rounded-2xl blur-sm opacity-80" />
+            <div className="relative bg-gradient-to-br from-gray-900/95 to-black/95 p-8 rounded-2xl backdrop-blur-md border border-gray-700/50">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className={`transition-all duration-700 ${contentVisible ? 'animate-corporate-slide' : 'opacity-0'}`} style={{
+                animationDelay: '500ms'
+              }}>
+                  <Input 
+                    type="text" 
+                    name="name" 
+                    placeholder="Your Name*" 
+                    value={formData.name} 
+                    onChange={handleInputChange} 
+                    required 
+                    className="bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 transition-all duration-500 focus:border-blue-400/60 focus:bg-gray-800/70 focus:shadow-lg focus:animate-elegant-focus rounded-xl h-12 backdrop-blur-sm" 
+                  />
+                </div>
+                
+                <div className={`transition-all duration-700 ${contentVisible ? 'animate-corporate-slide' : 'opacity-0'}`} style={{
+                animationDelay: '600ms'
+              }}>
+                  <Input 
+                    type="email" 
+                    name="email" 
+                    placeholder="Your Email*" 
+                    value={formData.email} 
+                    onChange={handleInputChange} 
+                    required 
+                    className="bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 transition-all duration-500 focus:border-blue-400/60 focus:bg-gray-800/70 focus:shadow-lg focus:animate-elegant-focus rounded-xl h-12 backdrop-blur-sm" 
+                  />
+                </div>
+                
+                <div className={`transition-all duration-700 ${contentVisible ? 'animate-corporate-slide' : 'opacity-0'}`} style={{
+                animationDelay: '700ms'
+              }}>
+                  <Textarea 
+                    name="message" 
+                    placeholder="Your Message*" 
+                    rows={5} 
+                    value={formData.message} 
+                    onChange={handleInputChange} 
+                    required 
+                    className="bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 transition-all duration-500 focus:border-blue-400/60 focus:bg-gray-800/70 focus:shadow-lg focus:animate-elegant-focus rounded-xl backdrop-blur-sm resize-none" 
+                  />
+                </div>
+                
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting} 
+                  className={`w-full bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-black font-semibold transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed h-12 rounded-xl relative overflow-hidden group ${contentVisible ? 'animate-luxury-reveal' : 'opacity-0 scale-75'}`} 
+                  style={{
+                  animationDelay: '800ms'
+                }}
+                >
+                  <span className="relative z-10 transition-all duration-300 group-hover:scale-105">
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </Button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

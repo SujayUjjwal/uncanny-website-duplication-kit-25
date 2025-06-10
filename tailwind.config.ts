@@ -268,6 +268,210 @@ export default {
 					'100%': {
 						transform: 'rotateX(360deg) rotateY(720deg)'
 					}
+				},
+				// NEW PROFESSIONAL ANIMATIONS
+				// Executive Boardroom Theme - Strategy Section
+				'luxury-reveal': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(40px) scale(0.95)',
+						filter: 'blur(4px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0) scale(1)',
+						filter: 'blur(0px)'
+					}
+				},
+				'executive-badge': {
+					'0%': {
+						transform: 'rotate(-180deg) scale(0.8)',
+						opacity: '0'
+					},
+					'50%': {
+						transform: 'rotate(0deg) scale(1.1)',
+						opacity: '0.8'
+					},
+					'100%': {
+						transform: 'rotate(0deg) scale(1)',
+						opacity: '1'
+					}
+				},
+				'premium-glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(255, 215, 0, 0.1)'
+					},
+					'50%': {
+						boxShadow: '0 0 30px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 215, 0, 0.2)'
+					}
+				},
+				'connection-line': {
+					'0%': {
+						width: '0%',
+						opacity: '0'
+					},
+					'100%': {
+						width: '100%',
+						opacity: '1'
+					}
+				},
+				// Financial Dashboard Theme - Statistics Section
+				'luxury-counter': {
+					'0%': {
+						transform: 'scale(0.5) rotateY(-90deg)',
+						opacity: '0'
+					},
+					'50%': {
+						transform: 'scale(1.1) rotateY(0deg)',
+						opacity: '0.8'
+					},
+					'100%': {
+						transform: 'scale(1) rotateY(0deg)',
+						opacity: '1'
+					}
+				},
+				'progress-ring': {
+					'0%': {
+						strokeDasharray: '0 251.2',
+						transform: 'rotate(-90deg)'
+					},
+					'100%': {
+						strokeDasharray: '251.2 251.2',
+						transform: 'rotate(270deg)'
+					}
+				},
+				'financial-chart': {
+					'0%': {
+						strokeDasharray: '0 1000',
+						opacity: '0'
+					},
+					'100%': {
+						strokeDasharray: '1000 1000',
+						opacity: '1'
+					}
+				},
+				'executive-glow': {
+					'0%, 100%': {
+						boxShadow: '0 4px 20px rgba(34, 197, 94, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+					},
+					'50%': {
+						boxShadow: '0 8px 30px rgba(34, 197, 94, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+					}
+				},
+				// Corporate Elegance Theme - Contact Section
+				'form-reveal': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateX(-30px) scale(0.95)',
+						filter: 'blur(2px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateX(0) scale(1)',
+						filter: 'blur(0px)'
+					}
+				},
+				'luxury-ripple': {
+					'0%': {
+						transform: 'scale(0)',
+						opacity: '1'
+					},
+					'100%': {
+						transform: 'scale(4)',
+						opacity: '0'
+					}
+				},
+				'corporate-slide': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(30px) rotateX(-10deg)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0) rotateX(0deg)'
+					}
+				},
+				'elegant-focus': {
+					'0%': {
+						borderColor: 'rgba(156, 163, 175, 0.3)',
+						boxShadow: '0 0 0 0 rgba(59, 130, 246, 0)'
+					},
+					'100%': {
+						borderColor: 'rgba(59, 130, 246, 0.6)',
+						boxShadow: '0 0 0 3px rgba(59, 130, 246, 0.1)'
+					}
+				},
+				// Executive Interface Theme - Navigation
+				'executive-menu': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(-10px) scale(0.95)',
+						backdropFilter: 'blur(0px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0) scale(1)',
+						backdropFilter: 'blur(8px)'
+					}
+				},
+				'luxury-underline': {
+					'0%': {
+						width: '0%',
+						height: '2px',
+						background: 'linear-gradient(90deg, transparent, #fbbf24, transparent)'
+					},
+					'100%': {
+						width: '100%',
+						height: '2px',
+						background: 'linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24)'
+					}
+				},
+				'premium-scale': {
+					'0%': {
+						transform: 'scale(1)',
+						filter: 'brightness(1)'
+					},
+					'100%': {
+						transform: 'scale(1.05)',
+						filter: 'brightness(1.1)'
+					}
+				},
+				// Sophisticated General Animations
+				'soothing-fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(20px)',
+						filter: 'blur(1px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)',
+						filter: 'blur(0px)'
+					}
+				},
+				'soothing-fade-in-up': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(25px)',
+						filter: 'blur(1px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)',
+						filter: 'blur(0px)'
+					}
+				},
+				'gentle-scale-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'scale(0.9)',
+						filter: 'blur(2px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'scale(1)',
+						filter: 'blur(0px)'
+					}
 				}
 			},
 			animation: {
@@ -292,7 +496,31 @@ export default {
 				'circuit-pulse': 'circuit-pulse 3s ease-in-out infinite',
 				'gradient-orb': 'gradient-orb 5s ease-in-out infinite',
 				'book-flip': 'book-flip 6s ease-in-out infinite',
-				'dna-helix': 'dna-helix 10s linear infinite'
+				'dna-helix': 'dna-helix 10s linear infinite',
+				// NEW PROFESSIONAL ANIMATIONS
+				// Executive Boardroom Theme
+				'luxury-reveal': 'luxury-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+				'executive-badge': 'executive-badge 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+				'premium-glow': 'premium-glow 3s ease-in-out infinite',
+				'connection-line': 'connection-line 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+				// Financial Dashboard Theme
+				'luxury-counter': 'luxury-counter 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+				'progress-ring': 'progress-ring 2s cubic-bezier(0.4, 0, 0.2, 1)',
+				'financial-chart': 'financial-chart 2.5s cubic-bezier(0.645, 0.045, 0.355, 1)',
+				'executive-glow': 'executive-glow 4s ease-in-out infinite',
+				// Corporate Elegance Theme
+				'form-reveal': 'form-reveal 1s cubic-bezier(0.23, 1, 0.32, 1)',
+				'luxury-ripple': 'luxury-ripple 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+				'corporate-slide': 'corporate-slide 1.1s cubic-bezier(0.215, 0.61, 0.355, 1)',
+				'elegant-focus': 'elegant-focus 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+				// Executive Interface Theme
+				'executive-menu': 'executive-menu 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+				'luxury-underline': 'luxury-underline 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+				'premium-scale': 'premium-scale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+				// Sophisticated General
+				'soothing-fade-in': 'soothing-fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+				'soothing-fade-in-up': 'soothing-fade-in-up 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+				'gentle-scale-in': 'gentle-scale-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
 			}
 		}
 	},
