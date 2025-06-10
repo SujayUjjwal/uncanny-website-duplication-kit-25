@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Users, MessageSquare, GraduationCap, BarChart3 } from 'lucide-react';
+import { ArrowLeft, Users, MessageSquare, GraduationCap, BarChart3, Edit3 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import SeminarRegistrationManager from '@/components/admin/SeminarRegistrationManager';
 import ContactMessageManager from '@/components/admin/ContactMessageManager';
 import CourseEnrollmentManager from '@/components/admin/CourseEnrollmentManager';
+import TextEditor from '@/components/admin/TextEditor';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 
-type ActiveSection = 'dashboard' | 'seminar' | 'contact' | 'enrollment';
+type ActiveSection = 'dashboard' | 'seminar' | 'contact' | 'enrollment' | 'text-editor';
 
 interface Stats {
   seminarRegistrations: number;
@@ -146,7 +147,7 @@ const AdminDashboard = () => {
           <CardTitle>Quick Actions</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Button onClick={() => setActiveSection('seminar')} variant="outline" className="justify-start">
               <Users className="w-4 h-4 mr-2" />
               Manage Seminar Registrations
@@ -158,6 +159,10 @@ const AdminDashboard = () => {
             <Button onClick={() => setActiveSection('enrollment')} variant="outline" className="justify-start">
               <GraduationCap className="w-4 h-4 mr-2" />
               Manage Course Enrollments
+            </Button>
+            <Button onClick={() => setActiveSection('text-editor')} variant="outline" className="justify-start">
+              <Edit3 className="w-4 h-4 mr-2" />
+              Edit Text Content
             </Button>
           </div>
         </CardContent>
@@ -196,6 +201,8 @@ const AdminDashboard = () => {
         return <ContactMessageManager />;
       case 'enrollment':
         return <CourseEnrollmentManager />;
+      case 'text-editor':
+        return <TextEditor />;
       default:
         return renderDashboard();
     }
