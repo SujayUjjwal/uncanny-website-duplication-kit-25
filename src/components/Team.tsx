@@ -73,25 +73,31 @@ const Team = () => {
           {content.team.members.map((member, index) => (
             <div 
               key={member.id} 
-              className={`text-center group transition-all duration-800 ${
+              className={`text-center group transition-all duration-800 cursor-pointer hover:animate-luxury-team-reveal ${
                 teamVisible ? 'animate-soothing-fade-in-up' : 'opacity-0 translate-y-8'
               }`}
               style={{ animationDelay: `${index * 200}ms` }}
             >
-              <div className="relative w-48 h-64 bg-gray-300 rounded-lg mx-auto mb-4 overflow-hidden">
+              <div className="relative w-48 h-64 bg-gray-300 rounded-lg mx-auto mb-4 overflow-hidden group-hover:shadow-2xl transition-all duration-500">
                 <img 
                   src={member.image} 
                   alt={member.name} 
-                  className="w-full h-full object-cover" 
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" 
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-4 left-4 right-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                  <div className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                    {member.specialization}
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-1">
+              <h3 className="text-xl font-semibold text-gray-900 mb-1 transition-all duration-500 group-hover:text-blue-900 group-hover:scale-105">
                 {member.name}
               </h3>
-              <p className="text-gray-600 mb-2">
+              <p className="text-gray-600 mb-2 transition-all duration-500 group-hover:text-blue-700">
                 {member.title}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 transition-all duration-500 group-hover:text-gray-700">
                 {member.specialization}
               </p>
             </div>

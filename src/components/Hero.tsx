@@ -98,27 +98,35 @@ const Hero = () => {
             bg,
             delay,
             platform
-          }, index) => <button key={index} onClick={() => handleSocialClick(platform)} className={`w-10 h-10 ${bg} rounded-full flex items-center justify-center transition-all duration-300 animate-gentle-fade-in cursor-pointer`} style={{
+          }, index) => <button key={index} onClick={() => handleSocialClick(platform)} className={`w-10 h-10 ${bg} rounded-full flex items-center justify-center transition-all duration-500 animate-gentle-fade-in cursor-pointer group relative overflow-hidden hover:animate-luxury-social-glow`} style={{
             animationDelay: `${delay}ms`
           }}>
-                <Icon className="w-5 h-5 text-white" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                <Icon className="w-5 h-5 text-white relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
               </button>)}
           </div>
 
           <div className="animate-gentle-fade-in-up" style={{
           animationDelay: '6600ms'
         }}>
-            <Button onClick={handleRegisterClick} className="bg-yellow-500 text-black font-semibold px-8 py-3 text-lg hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105">
-              Register for Seminar
+            <Button onClick={handleRegisterClick} className="bg-yellow-500 text-black font-semibold px-8 py-3 text-lg transition-all duration-500 transform relative overflow-hidden group hover:animate-luxury-button-morph">
+              <span className="relative z-10 transition-all duration-300 group-hover:scale-105">
+                Register for Seminar
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Fixed Enroll Button */}
+      {/* Fixed Enroll Button with Enhanced Hover */}
       <div className="fixed bottom-6 right-6 z-50">
-        <Button onClick={handleEnrollClick} className="bg-yellow-500 text-black font-bold px-6 py-4 text-lg rounded-full shadow-lg hover:bg-yellow-400 transition-all duration-300 transform hover:scale-110">
-          Enroll Now
+        <Button onClick={handleEnrollClick} className="bg-yellow-500 text-black font-bold px-6 py-4 text-lg rounded-full shadow-lg transition-all duration-500 transform relative overflow-hidden group hover:animate-luxury-button-morph">
+          <span className="relative z-10 transition-all duration-300 group-hover:scale-105">
+            Enroll Now
+          </span>
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+          <div className="absolute inset-0 rounded-full animate-premium-ripple opacity-0 group-hover:opacity-100 bg-yellow-400/30" />
         </Button>
       </div>
 

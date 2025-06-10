@@ -88,39 +88,39 @@ const Reviews = () => {
         <div className="mb-8 relative px-12 sm:px-16" ref={contentRef}>
           <button
             onClick={goToPrevious}
-            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full flex items-center justify-center transition-all duration-300 ${
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full flex items-center justify-center transition-all duration-500 group hover:bg-gray-700 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30 ${
               contentVisible ? 'animate-gentle-fade-in' : 'opacity-0'
             }`}
             style={{ animationDelay: '600ms' }}
           >
-            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white transition-all duration-300 group-hover:scale-125 group-hover:text-blue-300" />
           </button>
           
           <button
             onClick={goToNext}
-            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full flex items-center justify-center transition-all duration-300 ${
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-gray-800 rounded-full flex items-center justify-center transition-all duration-500 group hover:bg-gray-700 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30 ${
               contentVisible ? 'animate-gentle-fade-in' : 'opacity-0'
             }`}
             style={{ animationDelay: '600ms' }}
           >
-            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white transition-all duration-300 group-hover:scale-125 group-hover:text-blue-300" />
           </button>
 
-          <div className={`w-16 h-16 bg-gray-600 rounded-full mx-auto mb-6 transition-all duration-600 overflow-hidden ${
+          <div className={`w-16 h-16 bg-gray-600 rounded-full mx-auto mb-6 transition-all duration-600 overflow-hidden group cursor-pointer hover:scale-110 hover:shadow-xl hover:shadow-purple-500/40 ${
             contentVisible ? 'animate-gentle-scale-in' : 'opacity-0'
           }`}>
             <img 
               src={reviews[currentReview].image} 
               alt={reviews[currentReview].author}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
             />
           </div>
-          <blockquote className={`text-lg italic mb-6 transition-all duration-700 ${
+          <blockquote className={`text-lg italic mb-6 transition-all duration-700 hover:text-blue-100 cursor-pointer ${
             contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
           }`} style={{ animationDelay: '300ms' }}>
             "{reviews[currentReview].text}"
           </blockquote>
-          <p className={`text-gray-400 transition-all duration-700 ${
+          <p className={`text-gray-400 transition-all duration-700 hover:text-gray-300 cursor-pointer ${
             contentVisible ? 'animate-gentle-fade-in-up' : 'opacity-0'
           }`} style={{ animationDelay: '500ms' }}>
             - {reviews[currentReview].author}
@@ -133,8 +133,10 @@ const Reviews = () => {
           {reviews.map((_, index) => (
             <div 
               key={index}
-              className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                index === currentReview ? 'bg-yellow-500' : 'bg-gray-600'
+              className={`w-2 h-2 rounded-full transition-all duration-500 cursor-pointer hover:scale-150 hover:shadow-lg ${
+                index === currentReview 
+                  ? 'bg-yellow-500 shadow-yellow-500/50' 
+                  : 'bg-gray-600 hover:bg-gray-500 hover:shadow-gray-400/50'
               }`}
               onClick={() => setCurrentReview(index)}
             />

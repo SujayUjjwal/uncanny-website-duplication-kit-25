@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -472,6 +473,156 @@ export default {
 						transform: 'scale(1)',
 						filter: 'blur(0px)'
 					}
+				},
+				// NEW PROFESSIONAL HOVER ANIMATIONS
+				// Luxury Social Icons
+				'luxury-social-glow': {
+					'0%': {
+						transform: 'scale(1)',
+						boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+						filter: 'brightness(1)'
+					},
+					'100%': {
+						transform: 'scale(1.15)',
+						boxShadow: '0 8px 30px rgba(59, 130, 246, 0.4), 0 0 20px rgba(59, 130, 246, 0.3)',
+						filter: 'brightness(1.2)'
+					}
+				},
+				// Premium Button Effects
+				'luxury-button-morph': {
+					'0%': {
+						transform: 'scale(1) translateY(0)',
+						boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
+					},
+					'100%': {
+						transform: 'scale(1.05) translateY(-2px)',
+						boxShadow: '0 12px 35px rgba(245, 158, 11, 0.4), 0 0 25px rgba(245, 158, 11, 0.2)'
+					}
+				},
+				'premium-ripple': {
+					'0%': {
+						transform: 'scale(0)',
+						opacity: '0.8'
+					},
+					'100%': {
+						transform: 'scale(4)',
+						opacity: '0'
+					}
+				},
+				// Elegant Card Interactions
+				'luxury-card-lift': {
+					'0%': {
+						transform: 'translateY(0) scale(1)',
+						boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
+					},
+					'100%': {
+						transform: 'translateY(-8px) scale(1.02)',
+						boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15), 0 0 20px rgba(59, 130, 246, 0.1)'
+					}
+				},
+				'premium-border-glow': {
+					'0%': {
+						borderColor: 'rgba(156, 163, 175, 0.3)'
+					},
+					'100%': {
+						borderColor: 'rgba(59, 130, 246, 0.6)',
+						boxShadow: '0 0 20px rgba(59, 130, 246, 0.2)'
+					}
+				},
+				// Sophisticated Icon Animations
+				'luxury-icon-spin': {
+					'0%': {
+						transform: 'rotate(0deg) scale(1)',
+						filter: 'brightness(1)'
+					},
+					'100%': {
+						transform: 'rotate(360deg) scale(1.1)',
+						filter: 'brightness(1.3)'
+					}
+				},
+				'premium-icon-bounce': {
+					'0%, 100%': {
+						transform: 'translateY(0) scale(1)'
+					},
+					'50%': {
+						transform: 'translateY(-5px) scale(1.1)'
+					}
+				},
+				// Executive Progress Effects
+				'luxury-progress-shimmer': {
+					'0%': {
+						backgroundPosition: '-200% 0'
+					},
+					'100%': {
+						backgroundPosition: '200% 0'
+					}
+				},
+				'premium-progress-glow': {
+					'0%': {
+						boxShadow: '0 0 10px rgba(59, 130, 246, 0.3)'
+					},
+					'100%': {
+						boxShadow: '0 0 20px rgba(59, 130, 246, 0.6), 0 0 30px rgba(59, 130, 246, 0.4)'
+					}
+				},
+				// Sophisticated Form Interactions
+				'luxury-input-focus': {
+					'0%': {
+						transform: 'scale(1)',
+						borderColor: 'rgba(156, 163, 175, 0.3)',
+						boxShadow: '0 0 0 0 rgba(59, 130, 246, 0)'
+					},
+					'100%': {
+						transform: 'scale(1.02)',
+						borderColor: 'rgba(59, 130, 246, 0.6)',
+						boxShadow: '0 0 0 3px rgba(59, 130, 246, 0.1), 0 8px 25px rgba(59, 130, 246, 0.15)'
+					}
+				},
+				// Professional Menu Animations
+				'executive-menu-slide': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(-10px) scale(0.95)',
+						filter: 'blur(2px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0) scale(1)',
+						filter: 'blur(0px)'
+					}
+				},
+				// Luxury Navigation Effects
+				'premium-nav-highlight': {
+					'0%': {
+						background: 'linear-gradient(90deg, transparent, transparent)',
+						transform: 'scale(1)'
+					},
+					'100%': {
+						background: 'linear-gradient(90deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1))',
+						transform: 'scale(1.05)'
+					}
+				},
+				// Executive Team Card Effects
+				'luxury-team-reveal': {
+					'0%': {
+						transform: 'scale(1) rotateY(0deg)',
+						boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
+					},
+					'100%': {
+						transform: 'scale(1.05) rotateY(5deg)',
+						boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2), 0 0 20px rgba(59, 130, 246, 0.1)'
+					}
+				},
+				// Premium Counter Effects
+				'luxury-counter-glow': {
+					'0%': {
+						transform: 'scale(1)',
+						boxShadow: '0 4px 15px rgba(34, 197, 94, 0.2)'
+					},
+					'100%': {
+						transform: 'scale(1.1)',
+						boxShadow: '0 8px 30px rgba(34, 197, 94, 0.4), 0 0 25px rgba(34, 197, 94, 0.3)'
+					}
 				}
 			},
 			animation: {
@@ -520,7 +671,30 @@ export default {
 				// Sophisticated General
 				'soothing-fade-in': 'soothing-fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
 				'soothing-fade-in-up': 'soothing-fade-in-up 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-				'gentle-scale-in': 'gentle-scale-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+				'gentle-scale-in': 'gentle-scale-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+				// NEW PROFESSIONAL HOVER ANIMATIONS
+				// Luxury Interactive Elements
+				'luxury-social-glow': 'luxury-social-glow 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+				'luxury-button-morph': 'luxury-button-morph 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+				'premium-ripple': 'premium-ripple 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+				// Elegant Card Interactions
+				'luxury-card-lift': 'luxury-card-lift 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+				'premium-border-glow': 'premium-border-glow 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+				// Sophisticated Icon Effects
+				'luxury-icon-spin': 'luxury-icon-spin 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+				'premium-icon-bounce': 'premium-icon-bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+				// Executive Progress Effects
+				'luxury-progress-shimmer': 'luxury-progress-shimmer 2s linear infinite',
+				'premium-progress-glow': 'premium-progress-glow 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+				// Sophisticated Form Interactions
+				'luxury-input-focus': 'luxury-input-focus 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+				// Professional Menu Effects
+				'executive-menu-slide': 'executive-menu-slide 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+				'premium-nav-highlight': 'premium-nav-highlight 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+				// Executive Team Effects
+				'luxury-team-reveal': 'luxury-team-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+				// Premium Counter Effects
+				'luxury-counter-glow': 'luxury-counter-glow 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
 			}
 		}
 	},
