@@ -6,7 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import SeminarRegistrationManager from '@/components/admin/SeminarRegistrationManager';
 import ContactMessageManager from '@/components/admin/ContactMessageManager';
 import CourseEnrollmentManager from '@/components/admin/CourseEnrollmentManager';
-import TextEditor from '@/components/admin/TextEditor';
+import ComprehensiveTextEditor from '@/components/admin/ComprehensiveTextEditor';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 
@@ -162,7 +162,7 @@ const AdminDashboard = () => {
             </Button>
             <Button onClick={() => setActiveSection('text-editor')} variant="outline" className="justify-start">
               <Edit3 className="w-4 h-4 mr-2" />
-              Edit Text Content
+              Edit Website Content
             </Button>
           </div>
         </CardContent>
@@ -202,7 +202,7 @@ const AdminDashboard = () => {
       case 'enrollment':
         return <CourseEnrollmentManager />;
       case 'text-editor':
-        return <TextEditor />;
+        return <ComprehensiveTextEditor />;
       default:
         return renderDashboard();
     }
