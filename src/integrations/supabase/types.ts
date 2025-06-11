@@ -126,6 +126,36 @@ export type Database = {
         }
         Relationships: []
       }
+      website_content: {
+        Row: {
+          content_data: Json
+          created_at: string
+          formatting_options: Json | null
+          id: string
+          section_key: string
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          content_data: Json
+          created_at?: string
+          formatting_options?: Json | null
+          id?: string
+          section_key: string
+          updated_at?: string
+          version?: number
+        }
+        Update: {
+          content_data?: Json
+          created_at?: string
+          formatting_options?: Json | null
+          id?: string
+          section_key?: string
+          updated_at?: string
+          version?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

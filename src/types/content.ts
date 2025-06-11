@@ -1,4 +1,14 @@
 
+export interface FormattingOptions {
+  fontFamily?: string;
+  fontSize?: string;
+  fontWeight?: string;
+  color?: string;
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  lineHeight?: string;
+  letterSpacing?: string;
+}
+
 export interface HeroContent {
   title: string;
   subtitle: string;
@@ -143,3 +153,42 @@ export interface WebsiteContent {
   };
   submissions: FormSubmissions;
 }
+
+export interface ContentWithFormatting {
+  content: any;
+  formatting: Record<string, FormattingOptions>;
+}
+
+export interface WebsiteContentSection {
+  id: string;
+  section_key: string;
+  content_data: any;
+  formatting_options: Record<string, FormattingOptions>;
+  version: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export const FONT_FAMILIES = [
+  'Inter',
+  'Roboto',
+  'Open Sans',
+  'Lato',
+  'Source Sans Pro',
+  'Montserrat',
+  'Nunito',
+  'Poppins'
+];
+
+export const FONT_WEIGHTS = [
+  { value: '300', label: 'Light' },
+  { value: '400', label: 'Regular' },
+  { value: '500', label: 'Medium' },
+  { value: '600', label: 'Semibold' },
+  { value: '700', label: 'Bold' },
+  { value: '800', label: 'Extrabold' }
+];
+
+export const FONT_SIZES = [
+  '12', '14', '16', '18', '20', '24', '28', '32', '36', '40', '48', '56', '64', '72'
+];

@@ -1,12 +1,22 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { WebsiteContent, EnrollmentSubmission, RegistrationSubmission, ContactSubmission } from '@/types/content';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { 
+  WebsiteContent, 
+  WebsiteContentSection,
+  FormattingOptions,
+  EnrollmentSubmission, 
+  RegistrationSubmission, 
+  ContactSubmission 
+} from '@/types/content';
 
 interface ContentContextType {
   content: WebsiteContent;
-  updateContent: (section: keyof WebsiteContent, data: any) => void;
+  contentFormatting: Record<string, Record<string, FormattingOptions>>;
+  updateContent: (sectionKey: string, data: any, formatting?: Record<string, FormattingOptions>) => Promise<void>;
+  isLoading: boolean;
   exportContent: () => string;
-  importContent: (jsonData: string) => boolean;
+  importContent: (jsonData: string) => Promise<boolean>;
   addEnrollmentSubmission: (submission: Omit<EnrollmentSubmission, 'id' | 'submittedAt' | 'status'>) => void;
   addRegistrationSubmission: (submission: Omit<RegistrationSubmission, 'id' | 'submittedAt' | 'status'>) => void;
   addContactSubmission: (submission: Omit<ContactSubmission, 'id' | 'submittedAt' | 'status'>) => void;
@@ -115,13 +125,59 @@ const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 export const ContentProvider = ({ children }: { children: ReactNode }) => {
   const [content, setContent] = useState<WebsiteContent>(defaultContent);
+  const [contentFormatting, setContentFormatting] = useState<Record<string, Record<string, FormattingOptions>>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
 
+  // Load content from Supabase on mount
   useEffect(() => {
+    loadContentFromSupabase();
+    setupRealtimeSubscription();
+  }, []);
+
+  const loadContentFromSupabase = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('website_content')
+        .select('*');
+
+      if (error) {
+        console.error('Error loading content:', error);
+        // Fallback to localStorage if Supabase fails
+        loadFromLocalStorage();
+        return;
+      }
+
+      if (data && data.length > 0) {
+        const loadedContent = { ...defaultContent };
+        const loadedFormatting: Record<string, Record<string, FormattingOptions>> = {};
+
+        data.forEach((section: WebsiteContentSection) => {
+          if (section.section_key in loadedContent) {
+            (loadedContent as any)[section.section_key] = section.content_data;
+            loadedFormatting[section.section_key] = section.formatting_options || {};
+          }
+        });
+
+        setContent(loadedContent);
+        setContentFormatting(loadedFormatting);
+      } else {
+        // No data in Supabase, use default content
+        setContent(defaultContent);
+      }
+    } catch (error) {
+      console.error('Failed to load content from Supabase:', error);
+      loadFromLocalStorage();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadFromLocalStorage = () => {
     const savedContent = localStorage.getItem('website-content');
     if (savedContent) {
       try {
         const parsedContent = JSON.parse(savedContent);
-        // Ensure submissions structure exists for backward compatibility
         if (!parsedContent.submissions) {
           parsedContent.submissions = {
             enrollments: [],
@@ -134,19 +190,93 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
         console.error('Failed to parse saved content:', error);
       }
     }
-  }, []);
-
-  const saveToStorage = (newContent: WebsiteContent) => {
-    setContent(newContent);
-    localStorage.setItem('website-content', JSON.stringify(newContent));
   };
 
-  const updateContent = (section: keyof WebsiteContent, data: any) => {
+  const setupRealtimeSubscription = () => {
+    const channel = supabase
+      .channel('website-content-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'website_content'
+        },
+        (payload) => {
+          console.log('Real-time update received:', payload);
+          loadContentFromSupabase();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  };
+
+  const updateContent = async (sectionKey: string, data: any, formatting?: Record<string, FormattingOptions>) => {
+    try {
+      // Update Supabase
+      const { error } = await supabase
+        .from('website_content')
+        .upsert({
+          section_key: sectionKey,
+          content_data: data,
+          formatting_options: formatting || contentFormatting[sectionKey] || {},
+          version: 1
+        });
+
+      if (error) {
+        console.error('Error updating content in Supabase:', error);
+        toast({
+          title: "Error",
+          description: "Failed to save changes to database. Changes saved locally.",
+          variant: "destructive",
+        });
+        // Fallback to localStorage
+        updateLocalContent(sectionKey, data);
+        return;
+      }
+
+      // Update local state
+      const newContent = {
+        ...content,
+        [sectionKey]: data
+      };
+      setContent(newContent);
+
+      if (formatting) {
+        setContentFormatting(prev => ({
+          ...prev,
+          [sectionKey]: formatting
+        }));
+      }
+
+      // Also save to localStorage as backup
+      localStorage.setItem('website-content', JSON.stringify(newContent));
+
+      toast({
+        title: "Success",
+        description: "Changes saved successfully and synced globally!",
+      });
+
+    } catch (error) {
+      console.error('Failed to update content:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save changes. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const updateLocalContent = (sectionKey: string, data: any) => {
     const newContent = {
       ...content,
-      [section]: data
+      [sectionKey]: data
     };
-    saveToStorage(newContent);
+    setContent(newContent);
+    localStorage.setItem('website-content', JSON.stringify(newContent));
   };
 
   const addEnrollmentSubmission = (submission: Omit<EnrollmentSubmission, 'id' | 'submittedAt' | 'status'>) => {
@@ -164,7 +294,8 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
         enrollments: [...content.submissions.enrollments, newSubmission]
       }
     };
-    saveToStorage(newContent);
+    setContent(newContent);
+    localStorage.setItem('website-content', JSON.stringify(newContent));
   };
 
   const addRegistrationSubmission = (submission: Omit<RegistrationSubmission, 'id' | 'submittedAt' | 'status'>) => {
@@ -182,7 +313,8 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
         registrations: [...content.submissions.registrations, newSubmission]
       }
     };
-    saveToStorage(newContent);
+    setContent(newContent);
+    localStorage.setItem('website-content', JSON.stringify(newContent));
   };
 
   const addContactSubmission = (submission: Omit<ContactSubmission, 'id' | 'submittedAt' | 'status'>) => {
@@ -200,7 +332,8 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
         contacts: [...content.submissions.contacts, newSubmission]
       }
     };
-    saveToStorage(newContent);
+    setContent(newContent);
+    localStorage.setItem('website-content', JSON.stringify(newContent));
   };
 
   const updateSubmissionStatus = (type: 'enrollments' | 'registrations' | 'contacts', id: string, status: string) => {
@@ -213,7 +346,8 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
         )
       }
     };
-    saveToStorage(newContent);
+    setContent(newContent);
+    localStorage.setItem('website-content', JSON.stringify(newContent));
   };
 
   const deleteSubmission = (type: 'enrollments' | 'registrations' | 'contacts', id: string) => {
@@ -224,17 +358,20 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
         [type]: content.submissions[type].filter(submission => submission.id !== id)
       }
     };
-    saveToStorage(newContent);
+    setContent(newContent);
+    localStorage.setItem('website-content', JSON.stringify(newContent));
   };
 
   const exportContent = () => {
-    return JSON.stringify(content, null, 2);
+    return JSON.stringify({ content, formatting: contentFormatting }, null, 2);
   };
 
-  const importContent = (jsonData: string) => {
+  const importContent = async (jsonData: string) => {
     try {
-      const importedContent = JSON.parse(jsonData);
-      // Ensure submissions structure exists
+      const importedData = JSON.parse(jsonData);
+      const importedContent = importedData.content || importedData;
+      const importedFormatting = importedData.formatting || {};
+      
       if (!importedContent.submissions) {
         importedContent.submissions = {
           enrollments: [],
@@ -242,10 +379,30 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
           contacts: []
         };
       }
-      saveToStorage(importedContent);
+
+      // Save to Supabase
+      for (const [sectionKey, sectionData] of Object.entries(importedContent)) {
+        if (sectionKey !== 'submissions') {
+          await updateContent(sectionKey, sectionData, importedFormatting[sectionKey]);
+        }
+      }
+
+      setContent(importedContent);
+      setContentFormatting(importedFormatting);
+      
+      toast({
+        title: "Success",
+        description: "Content imported successfully!",
+      });
+      
       return true;
     } catch (error) {
       console.error('Failed to import content:', error);
+      toast({
+        title: "Error",
+        description: "Failed to import content. Please check the format.",
+        variant: "destructive",
+      });
       return false;
     }
   };
@@ -253,7 +410,9 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
   return (
     <ContentContext.Provider value={{ 
       content, 
+      contentFormatting,
       updateContent, 
+      isLoading,
       exportContent, 
       importContent,
       addEnrollmentSubmission,
@@ -274,3 +433,5 @@ export const useContent = () => {
   }
   return context;
 };
+
+export default ContentProvider;

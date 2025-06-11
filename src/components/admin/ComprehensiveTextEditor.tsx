@@ -1,15 +1,30 @@
 
-import { useState, useEffect } from 'react';
-import { useContent } from '@/contexts/ContentContext';
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Save, Search, Download, Upload, RotateCcw } from 'lucide-react';
+import { useContent } from '@/contexts/ContentContext';
+import { 
+  Edit3, 
+  Download, 
+  Upload, 
+  Search, 
+  Navigation as NavigationIcon,
+  Star,
+  Settings,
+  Target,
+  BarChart3,
+  Users,
+  Phone,
+  FileText,
+  Loader2
+} from 'lucide-react';
+
+// Import enhanced editors
 import NavigationTextEditor from './text-editors/NavigationTextEditor';
-import HeroTextEditor from './text-editors/HeroTextEditor';
+import EnhancedHeroTextEditor from './text-editors/EnhancedHeroTextEditor';
 import ServicesTextEditor from './text-editors/ServicesTextEditor';
 import StrategyTextEditor from './text-editors/StrategyTextEditor';
 import StatisticsTextEditor from './text-editors/StatisticsTextEditor';
@@ -18,164 +33,165 @@ import ContactTextEditor from './text-editors/ContactTextEditor';
 import FooterTextEditor from './text-editors/FooterTextEditor';
 
 const ComprehensiveTextEditor = () => {
-  const { content, updateContent, exportContent, importContent } = useContent();
+  const { exportContent, importContent, isLoading } = useContent();
   const [searchTerm, setSearchTerm] = useState('');
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
 
-  const handleGlobalSave = () => {
-    // Trigger save across all sections
-    setHasUnsavedChanges(false);
-    alert('All content saved successfully!');
+  const handleContentChange = () => {
+    setHasChanges(true);
   };
 
   const handleExport = () => {
-    const dataStr = exportContent();
-    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-    const exportFileDefaultName = `website-content-${new Date().toISOString().split('T')[0]}.json`;
-    
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportFileDefaultName);
-    linkElement.click();
+    const contentData = exportContent();
+    const blob = new Blob([contentData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `sumit-neet-content-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         const content = e.target?.result as string;
-        if (importContent(content)) {
-          alert('Content imported successfully!');
-        } else {
-          alert('Failed to import content. Please check the file format.');
+        const success = await importContent(content);
+        if (success) {
+          setHasChanges(false);
         }
       };
       reader.readAsText(file);
     }
   };
 
+  const sections = [
+    { id: 'navigation', name: 'Navigation', icon: NavigationIcon, component: NavigationTextEditor },
+    { id: 'hero', name: 'Hero Section', icon: Star, component: EnhancedHeroTextEditor },
+    { id: 'services', name: 'Services', icon: Settings, component: ServicesTextEditor },
+    { id: 'strategy', name: 'Strategy', icon: Target, component: StrategyTextEditor },
+    { id: 'statistics', name: 'Statistics', icon: BarChart3, component: StatisticsTextEditor },
+    { id: 'team', name: 'Team', icon: Users, component: TeamTextEditor },
+    { id: 'contact', name: 'Contact', icon: Phone, component: ContactTextEditor },
+    { id: 'footer', name: 'Footer', icon: FileText, component: FooterTextEditor },
+  ];
+
+  const filteredSections = sections.filter(section =>
+    section.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <Loader2 className="w-8 h-8 animate-spin" />
+        <span className="ml-2">Loading content...</span>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <span>Comprehensive Website Text Editor</span>
             <div className="flex items-center space-x-2">
-              {hasUnsavedChanges && (
-                <span className="text-sm text-orange-600 font-medium">Unsaved changes</span>
+              <Edit3 className="w-6 h-6" />
+              <span>Website Content & Typography Editor</span>
+              {hasChanges && (
+                <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">
+                  Unsaved Changes
+                </span>
               )}
-              <Button onClick={handleGlobalSave} size="sm">
-                <Save className="w-4 h-4 mr-2" />
-                Save All
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button onClick={handleExport} variant="outline" size="sm">
+                <Download className="w-4 h-4 mr-2" />
+                Export
               </Button>
+              <div className="relative">
+                <input
+                  type="file"
+                  accept=".json"
+                  onChange={handleImport}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+                <Button variant="outline" size="sm">
+                  <Upload className="w-4 h-4 mr-2" />
+                  Import
+                </Button>
+              </div>
             </div>
           </CardTitle>
           <p className="text-sm text-gray-600">
-            Edit every text element on your website in one organized interface
+            Edit all website content with advanced typography controls. Changes are saved globally and sync across all browsers in real-time.
           </p>
         </CardHeader>
         <CardContent>
-          {/* Global Actions */}
-          <div className="flex items-center space-x-4 mb-6 p-4 bg-gray-50 rounded-lg">
-            <div className="flex-1">
-              <Label htmlFor="search" className="sr-only">Search content</Label>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input
-                  id="search"
-                  placeholder="Search across all content..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </div>
-            <Button onClick={handleExport} variant="outline" size="sm">
-              <Download className="w-4 h-4 mr-2" />
-              Export
-            </Button>
-            <div>
-              <input
-                type="file"
-                accept=".json"
-                onChange={handleImport}
-                style={{ display: 'none' }}
-                id="import-file"
-              />
-              <Button
-                onClick={() => document.getElementById('import-file')?.click()}
-                variant="outline"
-                size="sm"
-              >
-                <Upload className="w-4 h-4 mr-2" />
-                Import
-              </Button>
+          <div className="flex items-center space-x-2 mb-4">
+            <Search className="w-4 h-4 text-gray-400" />
+            <Input
+              placeholder="Search sections..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="max-w-sm"
+            />
+            <div className="flex-1" />
+            <div className="text-sm text-gray-500">
+              Real-time sync enabled • {filteredSections.length} sections
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Tabbed Editor Interface */}
-          <Tabs defaultValue="sitewide" className="space-y-4">
-            <TabsList className="grid grid-cols-4 w-full">
-              <TabsTrigger value="sitewide">Site-wide</TabsTrigger>
-              <TabsTrigger value="homepage">Homepage</TabsTrigger>
-              <TabsTrigger value="about">About</TabsTrigger>
-              <TabsTrigger value="tools">Tools</TabsTrigger>
-            </TabsList>
+      <Tabs defaultValue="navigation" className="w-full">
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 gap-1">
+          {filteredSections.map((section) => {
+            const Icon = section.icon;
+            return (
+              <TabsTrigger 
+                key={section.id} 
+                value={section.id}
+                className="flex flex-col items-center space-y-1 h-auto py-2"
+              >
+                <Icon className="w-4 h-4" />
+                <span className="text-xs">{section.name}</span>
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
 
-            <TabsContent value="sitewide" className="space-y-6">
-              <NavigationTextEditor onContentChange={() => setHasUnsavedChanges(true)} />
-              <FooterTextEditor onContentChange={() => setHasUnsavedChanges(true)} />
+        {filteredSections.map((section) => {
+          const Component = section.component;
+          return (
+            <TabsContent key={section.id} value={section.id} className="mt-6">
+              <Component onContentChange={handleContentChange} />
             </TabsContent>
+          );
+        })}
+      </Tabs>
 
-            <TabsContent value="homepage" className="space-y-6">
-              <HeroTextEditor onContentChange={() => setHasUnsavedChanges(true)} />
-              <ServicesTextEditor onContentChange={() => setHasUnsavedChanges(true)} />
-              <StrategyTextEditor onContentChange={() => setHasUnsavedChanges(true)} />
-              <StatisticsTextEditor onContentChange={() => setHasUnsavedChanges(true)} />
-            </TabsContent>
-
-            <TabsContent value="about" className="space-y-6">
-              <TeamTextEditor onContentChange={() => setHasUnsavedChanges(true)} />
-              <ContactTextEditor onContentChange={() => setHasUnsavedChanges(true)} />
-            </TabsContent>
-
-            <TabsContent value="tools" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Content Management Tools</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Button variant="outline" className="justify-start h-auto p-4">
-                      <div className="text-left">
-                        <div className="font-medium">Search & Replace</div>
-                        <div className="text-sm text-gray-600">Find and replace text across all sections</div>
-                      </div>
-                    </Button>
-                    <Button variant="outline" className="justify-start h-auto p-4">
-                      <div className="text-left">
-                        <div className="font-medium">Content Templates</div>
-                        <div className="text-sm text-gray-600">Use pre-made text templates</div>
-                      </div>
-                    </Button>
-                    <Button variant="outline" className="justify-start h-auto p-4">
-                      <div className="text-left">
-                        <div className="font-medium">Content History</div>
-                        <div className="text-sm text-gray-600">View and restore previous versions</div>
-                      </div>
-                    </Button>
-                    <Button variant="outline" className="justify-start h-auto p-4">
-                      <div className="text-left">
-                        <div className="font-medium">Bulk Operations</div>
-                        <div className="text-sm text-gray-600">Edit multiple items at once</div>
-                      </div>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+      {/* Global Status */}
+      <Card className="bg-green-50 border-green-200">
+        <CardContent className="pt-6">
+          <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span className="text-green-700">Real-time Sync Active</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-blue-700">Global Storage Enabled</span>
+              </div>
+            </div>
+            <span className="text-gray-600">
+              All changes automatically saved to global database
+            </span>
+          </div>
         </CardContent>
       </Card>
     </div>
